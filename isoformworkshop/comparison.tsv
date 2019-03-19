@@ -1,0 +1,4 @@
+Software	De novo isoform annotation	Pairwise comparison	Multiple replicates	Covariates	Uses splice junction information	Plotting	Usability
+Cufflinks	Yes	No	No	No	Yes	No	Easy
+MISO	No	Yes	No	No	Yes	Yes	Moderate
+DEXSeq	No	Yes	Yes	Yes	No	Yes	Easy

@@ -340,6 +340,6 @@ P = ggplot(moltendf[moltendf$value > 0,], aes(x=date, y=value, group=`Province/S
   theme_bw(base_size=18) +
   facet_wrap(~`Province/State`) +
   scale_y_log10("Number of deaths due to COVID-19", labels=comma) +
-  xlab("Date as of global incidence")
+  xlab("Date as of first Canadian death")
 plot(P)
 ```

@@ -36,7 +36,7 @@ Here I avoided any data modeling and am just showing the raw number of diagnosed
 deathmat = read.csv("deaths.tsv", header=T,
                     sep="\t", check.names=F, row.names=1)
 countries = c("China", "Iran", "Italy",
-              "US", "Turkey", "Spain",
+              "US", "Russia", "Spain",
               "France", "Canada", "Germany",
               "Korea, South", "United Kingdom", "Israel")
 deathmat = deathmat[,c(countries, "date")]

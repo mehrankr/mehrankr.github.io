@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "04/12/2020"
+date: "04/13/2020"
 output:
   pdf_document: default
   html_document:
@@ -29,6 +29,38 @@ The python script _script.py_ is a modification of https://github.com/JacopoPan/
 
 
 Here I avoided any data modeling and am just showing the raw number of diagnosed patients, deaths, death rate, new cases by day, and new deaths by day.
+
+
+# Top countries by cases and deaths
+
+```{r fig.height=10, fig.width=15}
+deathmat = read.csv("deaths.tsv", header=T,
+                    sep="\t", check.names=F, row.names=1)
+countdeath = apply(deathmat[nrow(deathmat),1:(ncol(deathmat) - 1)], 2, sum)
+
+casemat = read.csv("confirmed.tsv",
+                   header=T, sep="\t", check.names=F, row.names=1)
+countcases = apply(casemat[nrow(casemat),1:(ncol(casemat) - 1)], 2, sum)
+
+totaldf = data.frame(Countries=c(names(countdeath), names(countcases)),
+                       Values=as.numeric(c(countdeath, countcases)),
+                       Variable=c(rep("Deaths", length(countdeath)),
+                                  rep("Diagnosed", length(countcases))))
+select_countries = names(sort(countcases, TRUE))[1:20]
+
+totaldf = totaldf[totaldf$Countries %in% select_countries, ]
+totaldf$Countries = factor(totaldf$Countries, levels=select_countries)
+
+P = ggplot(totaldf, aes(x=Countries, y=Values, fill=Variable)) +
+  geom_bar(stat="identity", position="dodge") +
+  facet_wrap(~Variable, nrow=2, scales="free") +
+  theme_bw(base_size=18) +
+  scale_y_log10("Number of patients", labels=comma) +
+  theme(legend.position="bottom",
+        axis.text.x=element_text(angle=45, hjust=1)) +
+  annotation_logticks(sides="lr")
+plot(P)
+```
 
 # Total morbidity
 

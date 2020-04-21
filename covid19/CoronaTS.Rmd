@@ -62,7 +62,43 @@ P = ggplot(totaldf, aes(x=Countries, y=Values, fill=Variable)) +
 plot(P)
 ```
 
+
+## Calculate doubling rate for each country since April 1st
+
+* Red line will show daily increase of twice.
+
+* Purple line will show daily increase of 10%
+
+* Blue line will show daily increase of 1%
+
+
+
+```{r}
+get_expected = function(datadf, rate=2, init=100){
+  list.data = lapply(unique(datadf$variable), function(country){
+    tempdf = datadf[datadf$variable==country, ]
+    # idx_st = min(which(tempdf$value >= init))
+    idx_st = min(which(tempdf$date >= as.Date("2020-04-01")))
+    init_val = tempdf$value[idx_st]
+    advals = sapply(1:nrow(tempdf), function(x){
+      if(x > idx_st){
+        return(init_val * (rate**(x - idx_st)))
+      }else{
+        return(0)
+      }
+    })
+    ad_df = data.frame(variable=country, Rate=rate,
+                       date=tempdf$date, value=advals)
+    return(ad_df)
+  })
+  out_df = do.call("rbind", list.data)
+  return(out_df)
+}
+```
+
+
 # Total morbidity
+
 
 ```{r fig.height = 7, fig.width = 13}
 deathmat = read.csv("deaths.tsv", header=T,
@@ -76,14 +112,21 @@ deathmat = deathmat[,c(countries, "date")]
 moltendf = melt(deathmat)
 moltendf$date = as.Date(moltendf$date)
 
+doubling_df = get_expected(moltendf, rate=2, init=100)
+onepercent_df = get_expected(moltendf, rate=1.01, init=100)
+tenpercent_df = get_expected(moltendf, rate=1.1, init=100)
+
 P2 = ggplot(moltendf[moltendf$value > 0,],
             aes(x=date, y=(value),
                 group=variable)) +
   geom_line() +
+  geom_line(data=doubling_df[doubling_df$value > 0,], colour="red3", linetype=2) +
+  geom_line(data=onepercent_df[onepercent_df$value > 0,], colour="blue", linetype=3) +
+  geom_line(data=tenpercent_df[tenpercent_df$value > 0,], colour="purple", linetype=4) +
   theme_bw(base_size=14) +
   facet_wrap(~variable) +
   scale_y_log10(
-    name="Total deaths caused by SARS-CoV-2", labels=comma) +
+    name="Total deaths caused by SARS-CoV-2", labels=comma, limits=c(1, max(moltendf$value))) +
   xlab("Date as of outbreak") +
   ggtitle(paste("Last update on", Sys.time())) +
   annotation_logticks()
@@ -128,14 +171,20 @@ casemat = casemat[,c(countries, "date")]
 moltendf = melt(casemat)
 moltendf$date = as.Date(moltendf$date)
 
+doubling_df = get_expected(moltendf, rate=2, init=100)
+onepercent_df = get_expected(moltendf, rate=1.01, init=100)
+tenpercent_df = get_expected(moltendf, rate=1.1, init=100)
 
 
 P2 = ggplot(moltendf[moltendf$value > 0, ], aes(x=date, y=(value), group=variable)) +
   geom_line() +
   theme_bw(base_size=14) +
   facet_wrap(~variable) +
+  geom_line(data=doubling_df[doubling_df$value > 0,], colour="red3", linetype=2) +
+  geom_line(data=onepercent_df[onepercent_df$value > 0,], colour="blue", linetype=3) +
+  geom_line(data=tenpercent_df[tenpercent_df$value > 0,], colour="purple", linetype=4) +
   scale_y_log10(
-    name="Total COVID-19 patients", labels=comma) +
+    name="Total COVID-19 patients", labels=comma, limits=c(1, max(moltendf$value))) +
   xlab("Date as of outbreak") +
   ggtitle(paste("Last update on", Sys.time())) +
   annotation_logticks()  
@@ -320,8 +369,8 @@ plot(P)
 # Canada
 
 ```{r fig.height = 13, fig.width = 15}
-setwd("COVID-19/csse_covid_19_data/csse_covid_19_time_series")
-casedf = read.csv("time_series_covid19_confirmed_global.csv", header=T, check.names=F)
+casepath = "COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+casedf = read.csv(casepath, header=T, check.names=F)
 casedf = casedf[casedf[,2]=="Canada", c(1, 5:ncol(casedf))]
 provinces = casedf[apply(casedf[,2:ncol(casedf)], 1, sum) > 0, 1]
 casedf = casedf[casedf[,1] %in% provinces,]
@@ -329,6 +378,15 @@ casedf = casedf[casedf[,1] %in% provinces,]
 
 moltendf = melt(casedf)
 moltendf$date = as.Date(as.character(moltendf$variable), tryFormats="%m/%d/%y")
+
+moltendf$variable = moltendf[,"Province/State"]
+doubling_df = get_expected(moltendf, rate=2, init=100)
+doubling_df[,"Province/State"] = doubling_df$variable
+onepercent_df = get_expected(moltendf, rate=1.01, init=100)
+onepercent_df[,"Province/State"] = onepercent_df$variable
+tenpercent_df = get_expected(moltendf, rate=1.1, init=100)
+tenpercent_df[,"Province/State"] = tenpercent_df$variable
+
 
 textdf = melt(casedf[,c(1, ncol(casedf))])
 textdf$date = as.Date(as.character(textdf$variable), tryFormats="%m/%d/%y")
@@ -338,10 +396,13 @@ textdf$value = 2000
 
 P = ggplot(moltendf[moltendf$value > 0,], aes(x=date, y=value, group=`Province/State`)) +
   geom_line() +
+  geom_line(data=doubling_df[doubling_df$value > 0,], colour="red3", linetype=2) +
+  geom_line(data=onepercent_df[onepercent_df$value > 0,], colour="blue", linetype=3) +
+  geom_line(data=tenpercent_df[tenpercent_df$value > 0,], colour="purple", linetype=4) +
   geom_text(data=textdf, aes(label=Label), colour="blue") +
   theme_bw(base_size=18) +
   facet_wrap(~`Province/State`) +
-  scale_y_log10("Number of patients diagnosed with COVID-19", labels=comma) +
+  scale_y_log10("Number of patients diagnosed with COVID-19", labels=comma, limits=c(1, max(moltendf$value))) +
   xlab("Date as of global incidence")
 plot(P)
 ```
@@ -350,8 +411,8 @@ plot(P)
 ## Canada's deaths
 
 ```{r fig.height = 13, fig.width = 15}
-setwd("COVID-19/csse_covid_19_data/csse_covid_19_time_series")
-casedf = read.csv("time_series_covid19_deaths_global.csv", header=T, check.names=F)
+casepath = "COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+casedf = read.csv(casepath, header=T, check.names=F)
 casedf = casedf[casedf[,2]=="Canada", c(1, 5:ncol(casedf))]
 provinces = casedf[apply(casedf[,2:ncol(casedf)], 1, sum) > 0, 1]
 casedf = casedf[casedf[,1] %in% provinces,]
@@ -359,6 +420,15 @@ casedf = casedf[casedf[,1] %in% provinces,]
 
 moltendf = melt(casedf)
 moltendf$date = as.Date(as.character(moltendf$variable), tryFormats="%m/%d/%y")
+
+moltendf$variable = moltendf[,"Province/State"]
+doubling_df = get_expected(moltendf, rate=2, init=100)
+doubling_df[,"Province/State"] = doubling_df$variable
+onepercent_df = get_expected(moltendf, rate=1.01, init=100)
+onepercent_df[,"Province/State"] = onepercent_df$variable
+tenpercent_df = get_expected(moltendf, rate=1.1, init=100)
+tenpercent_df[,"Province/State"] = tenpercent_df$variable
+
 
 textdf = melt(casedf[,c(1, ncol(casedf))])
 textdf$date = as.Date(as.character(textdf$variable), tryFormats="%m/%d/%y")
@@ -368,10 +438,13 @@ textdf$value = max(moltendf$value)
 
 P = ggplot(moltendf[moltendf$value > 0,], aes(x=date, y=value, group=`Province/State`)) +
   geom_line() +
+  geom_line(data=doubling_df[doubling_df$value > 0,], colour="red3", linetype=2) +
+  geom_line(data=onepercent_df[onepercent_df$value > 0,], colour="blue", linetype=3) +
+  geom_line(data=tenpercent_df[tenpercent_df$value > 0,], colour="purple", linetype=4) +
   geom_text(data=textdf, aes(label=Label), colour="blue") +
   theme_bw(base_size=18) +
   facet_wrap(~`Province/State`) +
-  scale_y_log10("Number of deaths due to COVID-19", labels=comma) +
+  scale_y_log10("Number of deaths due to COVID-19", labels=comma, limits=c(1, max(moltendf$value))) +
   xlab("Date as of first Canadian death")
 plot(P)
 ```

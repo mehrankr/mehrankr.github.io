@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "04/30/2020"
+date: "05/01/2020"
 output:
   pdf_document: default
   html_document:
@@ -334,7 +334,7 @@ P = ggplot(moltendf, aes(x=date, y=value, group=variable)) +
     labels=comma) +
   xlab("Date as of outbreak") +
   ggtitle(paste("Last update on", Sys.time())) +
-  coord_cartesian(ylim=c(0, 0.15))
+  coord_cartesian(ylim=c(0, 0.2))
 plot(P)
 ```
 

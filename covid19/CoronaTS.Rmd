@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "05/07/2020"
+date: "05/11/2020"
 output:
   pdf_document: default
   html_document:

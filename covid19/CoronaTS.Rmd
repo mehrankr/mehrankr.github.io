@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "05/12/2020"
+date: "05/15/2020"
 output:
   pdf_document: default
   html_document:
@@ -63,7 +63,7 @@ plot(P)
 ```
 
 
-## Calculate doubling rate for each country since April 15th
+## Calculate doubling rate for each country since May 1st
 
 * Red line will show daily increase of twice.
 
@@ -78,7 +78,7 @@ get_expected = function(datadf, rate=2, init=100){
   list.data = lapply(unique(datadf$variable), function(country){
     tempdf = datadf[datadf$variable==country, ]
     # idx_st = min(which(tempdf$value >= init))
-    idx_st = min(which(tempdf$date >= as.Date("2020-04-15")))
+    idx_st = min(which(tempdf$date >= as.Date("2020-05-01")))
     init_val = tempdf$value[idx_st]
     advals = sapply(1:nrow(tempdf), function(x){
       if(x > idx_st){
@@ -314,7 +314,7 @@ deathratedf$date = as.Date(deathratedf$date)
 
 textmat = casemat[which.max(casemat[,"China"]), ]
 textdf = melt(as.data.frame(textmat[,c(countries, "date")]))
-textdf$date = min(as.Date(deathratedf$date)) + 10
+textdf$date = min(as.Date(deathratedf$date)) + 40
 textdf$Label = paste("N =", comma(textdf$value))
 textdf$value = 0.08
 

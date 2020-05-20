@@ -1,8 +1,7 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "05/19/2020"
+date: "05/20/2020"
 output:
-  pdf_document: default
   html_document:
     toc: true
     toc_depth: 3
@@ -10,6 +9,7 @@ output:
     number_sections: true
     theme: united
     highlight: tango
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}

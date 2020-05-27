@@ -2,7 +2,6 @@
 title: "COVID-19 patients, deaths, and death rate"
 date: "05/25/2020"
 output:
-  pdf_document: default
   html_document:
     toc: true
     toc_depth: 3
@@ -10,6 +9,7 @@ output:
     number_sections: true
     theme: united
     highlight: tango
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -404,6 +404,37 @@ P = ggplot(moltendf[moltendf$value > 0,], aes(x=date, y=value, group=`Province/S
   facet_wrap(~`Province/State`) +
   scale_y_log10("Number of patients diagnosed with COVID-19", labels=comma, limits=c(1, max(moltendf$value))) +
   xlab("Date as of global incidence")
+plot(P)
+```
+
+## Provincial new cases in Canada
+
+```{r fig.height = 13, fig.width = 15}
+casepath = "COVID-19/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+casedf = read.csv(casepath, header=T, check.names=F)
+casedf = casedf[casedf[,2]=="Canada", c(1, 5:ncol(casedf))]
+provinces = casedf[apply(casedf[,2:ncol(casedf)], 1, sum) > 0, 1]
+casemat = casedf[casedf[,1] %in% provinces,]
+
+list.data = lapply(unique(casemat[,1]), function(province){
+  all_cases = as.numeric(casemat[casemat[,1]==province, 2:ncol(casemat)])
+  new_cases = diff(all_cases)
+  addf = data.frame(date=colnames(casemat)[3:ncol(casemat)],
+                    variable=province,
+                    value=new_cases)
+})
+moltendf = do.call("rbind", list.data)
+
+moltendf$date = as.Date(moltendf$date, "%m/%d/%y")
+
+P = ggplot(moltendf, aes(x=date, y=value, group=variable)) +
+  geom_line() +
+  theme_bw(base_size=14) +
+  facet_wrap(~variable, scales="free") +
+  scale_y_continuous(
+    name="New COVID-19 patients", labels=comma) +
+  ggtitle(paste("Last update on", Sys.time())) +
+  xlab("Date as of outbreak")
 plot(P)
 ```
 

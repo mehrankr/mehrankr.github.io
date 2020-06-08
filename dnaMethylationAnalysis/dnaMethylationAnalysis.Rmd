@@ -1,7 +1,7 @@
 ---
 title: "Epigenomics, with focus on the methylome"
 author: "Mehran Karimzadeh"
-date: "June 7th, 2020"
+date: "June 9th, 2020"
 output:
   xaringan::moon_reader:
     chakra: libs/remark-latest.min.js
@@ -96,6 +96,16 @@ sbatch -c 1 --mem=4G -t 1:00:00 myBashScriptThatIWillSubmitToRunOnSlurm.sh
 * Assignment: write a bash script that for 100 times, will print your name and submit it to the Slurm cluster using _sbatch_
 
 ---
+## For loops in bash
+
+```{bash eval=FALSE}
+for i in {0..99}
+do
+  echo "Variable i is set to $i"
+done
+```
+
+---
 ## What is epigenomics?
 
 * All the cells in our body have the same genetic code, but they use it differently
@@ -121,7 +131,7 @@ sbatch -c 1 --mem=4G -t 1:00:00 myBashScriptThatIWillSubmitToRunOnSlurm.sh
   + Chemical modifications of nucleotides: Methylation arrays and bisulfite sequencing
 
 ---
-## How does bisulfite sequencing analysis work?
+## Bisulfite sequencing pipeline
 
 ```{r echo=FALSE, eval=TRUE, out.height = "400px", message=FALSE}
 require(DiagrammeR)
@@ -151,7 +161,56 @@ digraph boxes_and_circles {
 }
 ")
 ```
+---
 
+## Question
+
+* Which important steps are missing here?
+
+```{r echo=FALSE, eval=TRUE, out.height = "400px", message=FALSE}
+require(DiagrammeR)
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs
+
+  node [shape = circle,
+        fixedsize = false,
+        width = 1] // sets as circles
+  BWAMETH; MethylDackel; Metilene;
+
+  # several 'edge' statements
+  FASTQT->BWAMETH BWAMETH->BAMT
+  FASTQN->BWAMETH BWAMETH->BAMN
+  BAMT->MethylDackel BAMN->MethylDackel
+  MethylDackel->bedGraphT MethylDackel->bedGraphN
+  bedGraphT->Metilene bedGraphN->Metilene
+  Metilene->DMRs
+}
+")
+```
+---
+## Quality control
+
+* Each step of the process requires a quality control
+
+--
+
+* "FASTQC" to assess quality of FASTQ files before and after removing the adapters
+
+--
+
+* "samtools flagstat" to assess the percent of uniquely aligned reads
+
+--
+
+* Enrichment of differentially methylated regions in promoters, CpG islands, etc.
 
 ---
 ## Limitations of ChIP-seq
@@ -186,7 +245,25 @@ knitr::include_graphics("dnaseseq.png")
 
 
 ---
-## Cytosine methylation
+## Cytosine methylation --- biology
+
+* Cytosine methylation regulates X chromosome inactivation in most female mammals
+
+--
+
+* It also regulates imprinted genes which express only from one of their two copies
+
+--
+
+* With exceptions during development, most CpG islands at the promoter of genes do not show methylation across different tissues
+
+-- 
+
+* CpG islands often coincide with active promoters of germ cells and DNA replication origins
+
+
+---
+## Cytosine methylation --- function
 
 * Many chromatin binding proteins, including transcription factors, bind to DNA based on their sequence specificity
 
@@ -204,6 +281,21 @@ knitr::include_graphics("dnaseseq.png")
 
 ---
 
+## Cytosine methylation --- evolution
+
+* Methylated cytosine could be deaminated to Uracil without being recognized by DNA repair machinery
+
+--
+
+* Global demethylation of primordial germ cells sustains the lifetime of CpG islands through generations
+
+--
+
+* A hypothesis explaining the evolution of CpG islands suggests that their vicinity to origins of replication hints the involvement of DNA polymerase in expanding these regions in the germ cells
+
+
+
+---
 
 * Outline
 
@@ -286,13 +378,13 @@ knitr::include_graphics("mw1.jpg")
 * The following directory contains all of the pipeline for chromosome 22:
 
 ```{bash eval=FALSE}
-/scratch/m/mhoffman/karimzad
+/scratch/t/teachmmg3003/mmg3003ta002
 ```
 
 * You can copy the fastq files from that directory to your scratch folder:
 
 ```{bash eval=FALSE}
-cp -rf /scratch/m/mhoffman/karimzad/newFastqFilesChr22 $SCRATCH
+cp -rf /scratch/t/teachmmg3003/mmg3003ta002/newFastqFilesChr22 $SCRATCH
 ```
 
 * This folder contains all of the files from the pipeline we process.
@@ -319,6 +411,10 @@ knitr::include_graphics("mw1.jpg")
 * Write a script to trim paired-end FASTQ files with trim galore in a new folder called trimmedFastqs
 
 ```{bash eval=FALSE}
+LOGDIR=$SCRATCH/Logs
+SCRIPTDIR=$SCRATCH/Scripts
+mkdir -p $SCRIPTDIR $LOGDIR
+cd $SCIPTDIR
 FASTQDIR=$SCRATCH/newFastqFilesChr22
 FQFOLDERS=($(ls $FASTQDIR))
 OUTMAIN=$SCRATCH/trimmedFastqsChr22
@@ -331,7 +427,7 @@ do
   echo -e '#!/bin/sh' > $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
   echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" >> $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
   echo "trim_galore --fastqc --paired --gzip -o $OUTDIR $FQ1 $FQ2" >> $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
-  sbatch -c 1 -t 1:00:00 $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/$FQFOLDER\_TrimGalore.%A.ERR -o  $LOGDIR/$FQFOLDER\_TrimGalore.%A.LOG $SCRIPTDIR/$FQFOLDER\_TrimGalore.sh
 done
 ```
 
@@ -360,9 +456,9 @@ knitr::include_graphics("mw1.jpg")
 * Write a script to generate <filename>_Align.sh scripts for aligning fastq files and submit them to cluster with sbatch
 
 ```{bash eval=FALSE}
+cd $SCIPTDIR
 REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
-FASTQDIR=$SCRATCH/newFastqFiles
-SCRIPTDIR=$SCRATCH/Scripts
+FASTQDIR=$SCRATCH/trimmedFastqsChr22
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 mkdir -p $BAMDIR
 mkdir -p $SCRIPTDIR
@@ -374,7 +470,7 @@ do
   echo -e '#!/bin/sh' > $SCRIPTDIR/$SAMPLE\_Align.sh
   echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" >> $SCRIPTDIR/$SAMPLE\_Align.sh
   echo "bwameth.py --reference $REF $FASTQDIR/$SAMPLE/$FQ1 $FASTQDIR/$SAMPLE/$FQ2 | samtools view -bS -F 4 > $BAMDIR/$SAMPLE.bam" >> $SCRIPTDIR/$SAMPLE\_Align.sh
-  # sbatch -c 1 -t 4:00:00 $SCRIPTDIR/$SAMPLE\_Align.sh
+  # sbatch -c 1 -t 4:00:00 -e $LOGDIR/$SAMPLE\_Align.%A.ERR -o $LOGDIR/$SAMPLE\_Align.%A.LOG $SCRIPTDIR/$SAMPLE\_Align.sh
 done
 ```
 

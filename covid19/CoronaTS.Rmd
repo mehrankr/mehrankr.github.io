@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "06/04/2020"
+date: "06/08/2020"
 output:
   pdf_document: default
   html_document:
@@ -78,7 +78,7 @@ get_expected = function(datadf, rate=2, init=100){
   list.data = lapply(unique(datadf$variable), function(country){
     tempdf = datadf[datadf$variable==country, ]
     # idx_st = min(which(tempdf$value >= init))
-    idx_st = min(which(tempdf$date >= as.Date("2020-05-01")))
+    idx_st = min(which(tempdf$date >= as.Date("2020-06-01")))
     init_val = tempdf$value[idx_st]
     advals = sapply(1:nrow(tempdf), function(x){
       if(x > idx_st){
@@ -144,7 +144,10 @@ list.data = lapply(colnames(deathmat)[1:(ncol(deathmat)-1)], function(country){
                     variable=country,
                     value=new_cases)
 })
+# Some countries (e.g. Spain on 5/25/20) have corrected their stats
+# Enforce 0 on the plot
 moltendf = do.call("rbind", list.data)
+moltendf$value[moltendf$value < 0] = 0
 
 moltendf$date = as.Date(moltendf$date)
 
@@ -202,8 +205,10 @@ list.data = lapply(colnames(casemat)[1:(ncol(casemat)-1)], function(country){
                     variable=country,
                     value=new_cases)
 })
+# Some countries (e.g. Spain on 5/25/20) have corrected their stats
+# Enforce 0 on the plot
 moltendf = do.call("rbind", list.data)
-
+moltendf$value[moltendf$value < 0] = 0
 moltendf$date = as.Date(moltendf$date)
 
 P = ggplot(moltendf, aes(x=date, y=value, group=variable)) +
@@ -423,8 +428,10 @@ list.data = lapply(unique(casemat[,1]), function(province){
                     variable=province,
                     value=new_cases)
 })
+# Some countries (e.g. Spain on 5/25/20) have corrected their stats
+# Enforce 0 on the plot
 moltendf = do.call("rbind", list.data)
-
+moltendf$value[moltendf$value < 0] = 0
 moltendf$date = as.Date(moltendf$date, "%m/%d/%y")
 
 P = ggplot(moltendf, aes(x=date, y=value, group=variable)) +

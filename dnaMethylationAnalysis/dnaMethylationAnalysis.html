@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Epigenomics, with focus on the methylome</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mehran Karimzadeh" />
+    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/viz-1.8.2/viz.js"></script>
+    <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Epigenomics, with focus on the methylome
+### Mehran Karimzadeh
+### June 7th, 2020
+
+---
+
+
+&lt;style type="text/css"&gt;
+.small {
+  font-size: 65%;
+}
+
+code.r{
+  font-size=8px;
+}
+
+code.python{
+  font-size=3px;
+}
+
+
+code.bash{
+  font-size=8px;
+}
+.medium {
+  font-size: 80%;
+}
+
+.smallcode {
+  font-size:50%
+}
+.smallcode .remark-code {
+  font-size: 50%
+}
+
+&lt;/style&gt;
+
+
+
+## Outline
+
+
+* Introduction to submitting jobs in batch on Slurm
+
+--
+
+* Introduction to epigenomics
+
+--
+
+  + Assessing transcription factor binding
+
+--
+
+  + Chromatin accessibility
+  
+--
+
+  + Assessing nucleotide modifications
+
+--
+
+* Methylome workshop
+
+---
+## How can we run a program on the cluster?
+
+* Request an interactive session
+
+
+```bash
+salloc
+samtools ...
+```
+
+--
+
+* Write a bash script and submit using _sbatch_
+
+
+```bash
+echo -e '#!/bin/sh' &gt; myBashScriptThatIWillSubmitToRunOnSlurm.sh
+echo "samtools ..." &gt;&gt; myBashScriptThatIWillSubmitToRunOnSlurm.sh
+sbatch -c 1 --mem=4G -t 1:00:00 myBashScriptThatIWillSubmitToRunOnSlurm.sh
+```
+
+--
+
+* Assignment: write a bash script that for 100 times, will print your name and submit it to the Slurm cluster using _sbatch_
+
+---
+## What is epigenomics?
+
+* All the cells in our body have the same genetic code, but they use it differently
+
+--
+
+* Epigenomics is the science of assessing cell type specific changes to DNA using high-throughut methods 
+
+--
+
+  + Histone modifications: ChIP-seq
+
+--
+
+  + Transcription factor binding: ChIP-seq
+
+--
+
+  + Short and long range DNA interactions: Chromatin capture, HiC, etc.
+
+--
+
+  + Chemical modifications of nucleotides: Methylation arrays and bisulfite sequencing
+
+---
+## How does bisulfite sequencing analysis work?
+
+<div id="htmlwidget-15a91880f0e8aa56ad7b" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15a91880f0e8aa56ad7b">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+---
+## Limitations of ChIP-seq
+
+* Requires 1 million to 100 million cells (depending the sample source and antibody specificity)
+
+--
+
+* Ideally requires an input or IgG control on each sample
+
+--
+
+* Similar to all antibody-based assays: Specificity and cross-reactivity of many antibodies limits interpretation of the results
+
+---
+## Identifying the accessible chromatin
+
+* Instead of identifying the exact nature of proteins bound to each genomic region, footprint of proteins on chromatin provides valuable information as well
+
+--
+
+* DNase-seq identifies parts of the genome protected from DNase-I digestion
+
+---
+
+&lt;img src="dnaseseq.png" width="600px" /&gt;
+
+---
+### Can you imagine a scenario that performing DNase-seq on a patient's sample could provide clinically usable information?
+
+
+---
+## Cytosine methylation
+
+* Many chromatin binding proteins, including transcription factors, bind to DNA based on their sequence specificity
+
+--
+
+* Addition of a hydrophobic functional group such as methylation, affects electrostatic interactions between DNA, histone, and other chromatin binding proteins
+
+--
+
+* On a genome wide scale, highly methylated regions are densely packed by histones and are transcriptionally repressed
+
+--
+
+* DNA methylation can also increase gene expression, by interfering with binding of repressive chromatin binding factors for example
+
+---
+
+
+* Outline
+
+  + Download the reference genome
+  
+  + Index the reference genome
+
+  + Copy fastq files from a shared folder
+  
+  + Trimming fastq files with trim galore
+  
+  + Aligning with bwa-meth (copy the BAM files from a shared folder)
+  
+  + Extracting CpG methylation estimates
+
+  + Visualizing methylation at CpG islands (supplementary slides)
+  
+  + Identifying differentially methylated regions
+  
+  + Investigating genes affected by differential methylation
+
+&lt;img src="mw0.jpg" width="800px" /&gt;
+
+
+---
+## Indexing BWA-meth
+
+* Download FASTA file of chr22
+
+
+```bash
+mkdir -p $SCRATCH/Ref
+cd $SCRATCH/Ref
+wget ftp://ftp.ensembl.org/pub/release-96/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
+gunzip Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
+```
+
+* Index FASTA file
+
+```bash
+module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel
+bwameth.py index Homo_sapiens.GRCh38.dna.chromosome.22.fa
+```
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Download CpG islands
+
+* Visit http://genome.ucsc.edu
+
+* Select the 3rd tool, _Table Browser_ 
+
+* Select the correct genome assembly, and group _Regulation_
+
+* Select the _CpG Islands_ track
+
+* Under position, type chr22
+
+* Select the output format as _BED - browser extensible data_
+
+* Save the file as: _hg38CpgIslandsForChr22.bed_
+
+* Use scp to transfer the file to $SCRATCH/Datasets
+
+
+```bash
+# From the local computer
+scp ~/Downloads/hg38CpgIslandsForChr22.bed username@teach.scinet.utoronto.ca:/scratch/t/teachmmg3003/mmg3003ta002/Datasets
+```
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Downloading necessary files
+
+* The following directory contains all of the pipeline for chromosome 22:
+
+
+```bash
+/scratch/m/mhoffman/karimzad
+```
+
+* You can copy the fastq files from that directory to your scratch folder:
+
+
+```bash
+cp -rf /scratch/m/mhoffman/karimzad/newFastqFilesChr22 $SCRATCH
+```
+
+* This folder contains all of the files from the pipeline we process.
+You can copy them the same way if you have issues running the commands.
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+
+---
+## What are these samples
+
+* H1-hESC is a human embryonic stem cell line which has been profiled extensively by the ENCODE consortium
+
+* The left ventricle embryonic tissue is obtained from a human embryo
+
+* By comparing these two tissues, we _may_ identify which regions of chr22 must be (de)methylated for differentiating the embryonic stem cell towards a heart muscle progeny.
+
+
+---
+## Trim the FASTQ files
+
+* Write a script to trim paired-end FASTQ files with trim galore in a new folder called trimmedFastqs
+
+
+```bash
+FASTQDIR=$SCRATCH/newFastqFilesChr22
+FQFOLDERS=($(ls $FASTQDIR))
+OUTMAIN=$SCRATCH/trimmedFastqsChr22
+for FQFOLDER in ${FQFOLDERS[@]}
+do
+  FQ1=$FASTQDIR/$FQFOLDER/$FQFOLDER\__1.fastq.gz
+  FQ2=$FASTQDIR/$FQFOLDER/$FQFOLDER\__2.fastq.gz
+  OUTDIR=$OUTMAIN/$FQFOLDER
+  mkdir -p $OUTDIR
+  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  echo "trim_galore --fastqc --paired --gzip -o $OUTDIR $FQ1 $FQ2" &gt;&gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  sbatch -c 1 -t 1:00:00 $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+done
+```
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## FASTQC reports
+
+* Use _scp_ to download fastqc files to your local computer
+
+
+```bash
+STUDENTID=05
+scp -r mmg3003student$STUDENTID@teach.scinet.utoronto.ca:/scratch/t/teachmmg3003/mmg3003student$STUDENTID/trimmedFastqsChr22/*/*fastqc* ~/Downloads
+```
+
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Align with BWA-Meth
+
+* Write a script to generate &lt;filename&gt;_Align.sh scripts for aligning fastq files and submit them to cluster with sbatch
+
+
+```bash
+REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
+FASTQDIR=$SCRATCH/newFastqFiles
+SCRIPTDIR=$SCRATCH/Scripts
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
+mkdir -p $BAMDIR
+mkdir -p $SCRIPTDIR
+SAMPLES=($(ls $FASTQDIR))
+for SAMPLE in ${SAMPLES[@]}
+do
+  FQ1=$(ls $FASTQDIR/$SAMPLE | grep val_1.fq.gz)
+  FQ2=$(ls $FASTQDIR/$SAMPLE | grep val_2.fq.gz)
+  echo -e '#!/bin/sh' &gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  echo "bwameth.py --reference $REF $FASTQDIR/$SAMPLE/$FQ1 $FASTQDIR/$SAMPLE/$FQ2 | samtools view -bS -F 4 &gt; $BAMDIR/$SAMPLE.bam" &gt;&gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  # sbatch -c 1 -t 4:00:00 $SCRIPTDIR/$SAMPLE\_Align.sh
+done
+```
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+## Copy the aligned bam files
+
+* It takes 4 hours of CPU time to align the FASTQ files to chr22.
+
+* Assignment: Similar to FASTQ files, copy the folder containing bam files of chr22 to your _$SCRATCH_ NOW!
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+## In-class assignment
+
+* Match the following phrases to either of Methylation array, whole genome bisulfite sequencing, or ChIP-seq
+
+  + Alignment
+  
+  + Bisulfite treatment
+  
+  + Mutations modifying the epigenome
+  
+  + EWAS
+  
+  + Fluorescence imaging
+  
+  + Anti-body cross-reactivity
+  
+  + Sex-specific batch effects
+  
+  + Sensitive to `\(O_3\)` levels
+
+---
+## Sort and index bam files
+
+* MethylDackel requires sorted and indexed bam files
+
+* Write a script to sort and index each bam file
+
+
+```bash
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
+BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
+for BAMFILE in ${BAMFILES[@]}
+do
+  SAMPLENAME=$(echo $BAMFILE | sed 's/.bam//')
+  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "samtools sort $BAMDIR/$BAMFILE -o $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "samtools index $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  sbath -c 1 -t 1:00:00 $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+done
+```
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+## Run MethylDackel
+
+* MethylDackel uses BAM files to extract cytosine methylation counts
+
+* Run a script to run MethylDackel files for each BAM file
+
+
+```bash
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
+OUTMAIN=$SCRATCH/methylDackelOutputChr22
+BAMFILES=($(ls $BAMDIR | grep sorted | grep -v bai | grep bam))
+REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
+for BAMFILE in ${BAMFILES[@]}
+do
+  SAMPLENAME=$(echo $BAMFILE | sed 's/_sorted.bam//')
+  OUTDIR=$OUTMAIN/$SAMPLENAME
+  mkdir -p $OUTDIR
+  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" &gt;&gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+  sbatch -c 1 -t 1:00:00 $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+done
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Explore the output of MethylDackel
+
+* What does each column of MethylDackel output represent?
+
+
+```r
+track type="bedGraph" description="/scratch/t/teachmmg3003/mmg3003ta002/methylDackelOutput/H1-hESC_rep1/H1-hESC_rep1_ CpG methylation levels"
+22      10513864        10513865        0
+22      10513906        10513907        1
+22      10515169        10515170        0
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## bedGraph is not efficient
+
+* bedGraph is a user-readable file format
+
+* Storing genomic signal in bedGraph format takes too much space and is computationally inefficient for random data retrieval
+
+* bigWig format, however, can store and retrieve genomic signals efficiently
+
+* Here we will download a program called bedGraphToBigWig and use it to convert bedGraph files
+
+
+
+```bash
+mkdir -p ~/software/bin
+cd ~/software/bin
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
+# Give yourself permission to run this program
+chmod u+x bedGraphToBigWig
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Finding size of chromosomes
+
+* bedGraphToBigWig requires a file with information of how long each chromosome is
+
+
+```bash
+cd ~/software/bin
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
+chmod u+x fetchChromSizes
+./fetchChromSizes hg38 &gt; $SCRATCH/Ref/hg38.chromsizes
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Convert bedGraph to bigWig
+
+* Write a script to convert output of MethylDackel from bedGraph to bigWig
+
+
+```bash
+salloc
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+for SAMPLE in ${SAMPLES[@]}
+do
+  BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
+  BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
+done
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+
+---
+## Identify differentially methylated regions
+
+* There are various software for identifying differentially methylated regions
+
+* Here we will use [https://dx.doi.org/10.1101%2Fgr.196394.115](Metilene: fast and sensitive calling of differentially methylated regions from bisulfite sequencing data)
+
+* Metilene requires a union file of bedGraphs we generated earlier with MethylDackel with the following columns:
+
+
+```r
+Chrom  Start  End  G1_1  G1_2  G2_1  G2_2
+```
+
+---
+* We can generate the input file this way:
+
+
+
+```bash
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+BGS=()
+HEADER=(chr start end)
+for SAMPLE in ${SAMPLES[@]}
+do
+  HEADER+=($SAMPLE)
+  BG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
+  BGS+=($MAINDIR/$SAMPLE/$BG)
+done
+module load gcc/7.3.0 bedtools
+echo -e ${HEADER[@]} | tr " " "\t" &gt; $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed
+bedtools unionbedg -i ${BGS[@]} &gt;&gt; $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed
+```
+
+&lt;img src="mw4.jpg" width="800px" /&gt;
+
+---
+## Metilene
+
+
+```bash
+module load metilene
+OUTDIR=$SCRATCH/metileneOutputChr22
+mkdir -p $OUTDIR
+echo -e "Chrom\tStart\tEnd\tqVal\tmeanDiff\tnumCpgs\tpMWU\tp2DKS\tmeanG1\tmeanG2" &gt; $OUTDIR/MetileneDMR.bed
+metilene -a "H1-hESC" -b "leftVentricle" $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed &gt;&gt; $OUTDIR/MetileneDMR.bed
+```
+
+&lt;img src="mw4.jpg" width="800px" /&gt;
+
+
+---
+## Exploring DMRs in the genome browser
+
+&lt;img src="mw5.jpg" width="800px" /&gt;
+
+---
+## In-class assignment - open question
+
+* A recent study used DNA methylation arrays to compare white blood cells in 2,312 healthy individuals and 1,322 individuals with alzheimer's disease. They identified 5 methylation probes at the vicinity of NFE2 transcription factor with increased methylation in most alzheimer's disease patients. What do you think are the key aspects before we could consider these methylation probes as biomarkers of alzheimer's disease?
+
+---
+## Assignment
+
+* In 200 words, describe how Metilene works
+
+* For each of the following, choose the best format (BED, bedGraph, bigWig)
+
+  + Reporting list of differentially methylated regions to a collaborator
+  
+  + Hosting a genome-wide signal track for chromatin accessibility
+  
+  + Reporting state of methylation for all CpGs in a single differentially methylated region to a collaborator
+  
+
+Continues on next slide:
+  
+---
+## Assignment
+  
+* Repeat the same analysis for chr21. 
+
+  + Provide an annotated script which explains how you accomplished each of the steps. 
+  
+  + List statistically significant differentially methylated regions
+  
+  + Which genes are likely to be affected by these changes in DNA methylation?
+
+
+* Choose one of the following methods (ATAC-seq, ChIP-seq, or Hi-C) and describe how the method is performed experimentally (200 words limit).
+
+---
+# Supplementary slides
+
+---
+## How can we explore hundreds of genomic regions for specific features, enrichments, etc.?
+
+* DeepTools has a program called _computeMatrix_
+
+* computeMatrix accepts signal files (e.g. in bigWig) and genomic region annotations (e.g. in BED or GTF) to calculate summary statistics
+
+* computeMatrix has two modules:
+
+  + reference-point: Obtains measures for entries of BED file (as reference) as well as their upstream and downstream
+  
+  + scale-regions: Calculates summary measures for BED files by shrinking each entry to a user-defined length
+
+---
+
+&lt;img src="computeMatrix1.png" width="800px" /&gt;
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## How is methylation signal around CpG islands?
+
+* Write a script to execute computeMatrix reference-point on CpG island BED file and the four bigWig files
+
+
+```bash
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+BWS=()
+for SAMPLE in ${SAMPLES[@]}
+do
+  BW=$(ls $MAINDIR/$SAMPLE | grep bigWig)
+  BWS+=($MAINDIR/$SAMPLE/$BW)
+done
+module load anaconda2/5.1.0 deeptools/3.2.1-anaconda2
+OUTDIR=$SCRATCH/methylationMatricesChr22
+mkdir -p $OUTDIR
+computeMatrix reference-point -R $SCRATCH/Datasets/hg38CpgIslandsForChr22.bed -S ${BWS[@]} -o $OUTDIR/mergedMethylationAroundIslands.tsv.gz --referencePoint TES --skipZeros --sortRegions descend --sortUsingSamples 1
+plotProfile -m $OUTDIR/mergedMethylationAroundIslands.tsv.gz -out $OUTDIR/mergedMethylationAroundIslands_1.pdf 
+plotProfile -m $OUTDIR/mergedMethylationAroundIslands.tsv.gz --perGroup --plotType heatmap -out $OUTDIR/mergedMethylationAroundIslands_2.pdf 
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

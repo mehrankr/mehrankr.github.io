@@ -145,16 +145,16 @@ done
 ---
 ## Bisulfite sequencing pipeline
 
-<div id="htmlwidget-614753dc3d6b8ac5fa40" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-614753dc3d6b8ac5fa40">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d7769a9a63f4b43e2268" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d7769a9a63f4b43e2268">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 
 ## Question
 
 * Which important steps are missing here?
 
-<div id="htmlwidget-48f751ef4257d19f31ee" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-48f751ef4257d19f31ee">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-897aa046aad0c8435e6c" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-897aa046aad0c8435e6c">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 ## Quality control
 
@@ -469,6 +469,7 @@ done
 
 
 ```bash
+cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
 for BAMFILE in ${BAMFILES[@]}
@@ -478,7 +479,7 @@ do
   echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
   echo "samtools sort $BAMDIR/$BAMFILE -o $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
   echo "samtools index $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
-  sbath -c 1 -t 1:00:00 $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/sortIndex.%A.ERR -o $LOGDIR/sortIndex.%A.LOG $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
 done
 ```
 
@@ -493,6 +494,7 @@ done
 
 
 ```bash
+cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 OUTMAIN=$SCRATCH/methylDackelOutputChr22
 BAMFILES=($(ls $BAMDIR | grep sorted | grep -v bai | grep bam))
@@ -502,10 +504,10 @@ do
   SAMPLENAME=$(echo $BAMFILE | sed 's/_sorted.bam//')
   OUTDIR=$OUTMAIN/$SAMPLENAME
   mkdir -p $OUTDIR
-  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" &gt;&gt; $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  sbatch -c 1 -t 1:00:00 $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+  echo -e '#!/bin/sh' &gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" &gt;&gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/Meth.%A.ERR -o $LOGDIR/Meth.%A.LOG $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
 done
 ```
 
@@ -560,6 +562,7 @@ cd ~/software/bin
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 chmod u+x fetchChromSizes
 ./fetchChromSizes hg38 &gt; $SCRATCH/Ref/hg38.chromsizes
+cat $SCRATCH/Ref/hg38.chromsizes |  sed 's/^chr//' &gt; $SCRATCH/Ref/GRCh38.chromsizes
 ```
 
 &lt;img src="mw3.jpg" width="800px" /&gt;
@@ -578,7 +581,7 @@ for SAMPLE in ${SAMPLES[@]}
 do
   BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
   BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
-  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/GRCh38.chromsizes $MAINDIR/$SAMPLE/$BW
 done
 ```
 

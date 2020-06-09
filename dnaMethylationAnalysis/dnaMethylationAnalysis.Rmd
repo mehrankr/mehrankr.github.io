@@ -518,6 +518,7 @@ knitr::include_graphics("mw2.jpg")
 * Write a script to sort and index each bam file
 
 ```{bash eval=FALSE}
+cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
 for BAMFILE in ${BAMFILES[@]}
@@ -527,7 +528,7 @@ do
   echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" >> $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
   echo "samtools sort $BAMDIR/$BAMFILE -o $BAMDIR/$SAMPLENAME\_sorted.bam" >> $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
   echo "samtools index $BAMDIR/$SAMPLENAME\_sorted.bam" >> $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
-  sbath -c 1 -t 1:00:00 $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/sortIndex.%A.ERR -o $LOGDIR/sortIndex.%A.LOG $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
 done
 ```
 
@@ -543,6 +544,7 @@ knitr::include_graphics("mw2.jpg")
 * Run a script to run MethylDackel files for each BAM file
 
 ```{bash eval=FALSE}
+cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 OUTMAIN=$SCRATCH/methylDackelOutputChr22
 BAMFILES=($(ls $BAMDIR | grep sorted | grep -v bai | grep bam))
@@ -552,10 +554,10 @@ do
   SAMPLENAME=$(echo $BAMFILE | sed 's/_sorted.bam//')
   OUTDIR=$OUTMAIN/$SAMPLENAME
   mkdir -p $OUTDIR
-  echo -e '#!/bin/sh' > $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" >> $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" >> $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
-  sbatch -c 1 -t 1:00:00 $SCRATCH/Scripts/MethylDackel_$SAMPLENAME.sh
+  echo -e '#!/bin/sh' > $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" >> $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" >> $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/Meth.%A.ERR -o $LOGDIR/Meth.%A.LOG $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
 done
 ```
 
@@ -613,6 +615,7 @@ cd ~/software/bin
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 chmod u+x fetchChromSizes
 ./fetchChromSizes hg38 > $SCRATCH/Ref/hg38.chromsizes
+cat $SCRATCH/Ref/hg38.chromsizes |  sed 's/^chr//' > $SCRATCH/Ref/GRCh38.chromsizes
 ```
 
 ```{r, out.width = "800px", echo=FALSE}
@@ -632,7 +635,7 @@ for SAMPLE in ${SAMPLES[@]}
 do
   BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
   BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
-  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/GRCh38.chromsizes $MAINDIR/$SAMPLE/$BW
 done
 ```
 

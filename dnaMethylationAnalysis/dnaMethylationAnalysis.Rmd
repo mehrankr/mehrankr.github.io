@@ -411,12 +411,12 @@ knitr::include_graphics("mw1.jpg")
 * Write a script to trim paired-end FASTQ files with trim galore in a new folder called trimmedFastqs
 
 ```{bash eval=FALSE}
-LOGDIR=$SCRATCH/Logs
-SCRIPTDIR=$SCRATCH/Scripts
-mkdir -p $SCRIPTDIR $LOGDIR
-cd $SCIPTDIR
-FASTQDIR=$SCRATCH/newFastqFilesChr22
-FQFOLDERS=($(ls $FASTQDIR))
+LOGDIR=$SCRATCH/Logs # Creates a new variable 
+SCRIPTDIR=$SCRATCH/Scripts # For scripts that run different programs
+mkdir -p $SCRIPTDIR $LOGDIR # Creating multiple folders simultaneously
+cd $SCIPTDIR # Change diretory
+FASTQDIR=$SCRATCH/newFastqFilesChr22 # PAth to our untrimmed fastq files
+FQFOLDERS=($(ls $FASTQDIR)) # Arrays
 OUTMAIN=$SCRATCH/trimmedFastqsChr22
 for FQFOLDER in ${FQFOLDERS[@]}
 do

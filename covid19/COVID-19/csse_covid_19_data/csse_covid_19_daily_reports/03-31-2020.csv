@@ -862,7 +862,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 37093,Hoke,North Carolina,US,2020-03-31 23:43:56,35.01888303,-79.23651674,4,0,0,0,"Hoke, North Carolina, US"
 12059,Holmes,Florida,US,2020-03-31 23:43:56,30.86747479,-85.81319222,1,0,0,0,"Holmes, Florida, US"
 28051,Holmes,Mississippi,US,2020-03-31 23:43:56,33.12345854,-90.08923538,15,1,0,0,"Holmes, Mississippi, US"
-39075,Holmes,Ohio,US,2020-03-31 23:43:56,40.56163713,-81.92635677,1,1,0,0,"Holmes, Ohio, US"
+39075,Holmes,Ohio,US,2020-03-31 23:43:56,40.56163713,-81.92635677,1,0,0,0,"Holmes, Ohio, US"
 15003,Honolulu,Hawaii,US,2020-03-31 23:43:56,21.45803166,-157.97121819999995,139,0,0,0,"Honolulu, Hawaii, US"
 48221,Hood,Texas,US,2020-03-31 23:43:56,32.42990927,-97.83242024,6,0,0,0,"Hood, Texas, US"
 41027,Hood River,Oregon,US,2020-03-31 23:43:56,45.51872811,-121.65520359999998,3,0,0,0,"Hood River, Oregon, US"
@@ -1399,7 +1399,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 36061,New York City,New York,US,2020-03-31 23:43:56,40.76727260000001,-73.97152637,43119,932,0,0,"New York City, New York, US"
 26123,Newaygo,Michigan,US,2020-03-31 23:43:56,43.554373999999996,-85.80070107,1,0,0,0,"Newaygo, Michigan, US"
 45071,Newberry,South Carolina,US,2020-03-31 23:43:56,34.28629098,-81.59935761,2,0,0,0,"Newberry, South Carolina, US"
-44005,Newport,Rhode Island,US,2020-03-31 23:43:56,41.5642026,-71.26569799,23,0,0,0,"Newport, Rhode Island, US"
+44005,Newport,Rhode Island,US,2020-03-31 23:43:56,41.5642026,-71.26569799,23,1,0,0,"Newport, Rhode Island, US"
 51700,Newport News,Virginia,US,2020-03-31 23:43:56,37.08166899,-76.51754109,23,1,0,0,"Newport News, Virginia, US"
 5101,Newton,Arkansas,US,2020-03-31 23:43:56,35.91947491,-93.21612969,1,0,0,0,"Newton, Arkansas, US"
 13217,Newton,Georgia,US,2020-03-31 23:43:56,33.55514538,-83.84547140000002,31,0,0,0,"Newton, Georgia, US"
@@ -1585,7 +1585,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 51149,Prince George,Virginia,US,2020-03-31 23:43:56,37.18497668,-77.22922187,7,0,0,0,"Prince George, Virginia, US"
 24033,Prince George's,Maryland,US,2020-03-31 23:43:56,38.83070039,-76.8496441,341,7,0,0,"Prince George's, Maryland, US"
 51153,Prince William,Virginia,US,2020-03-31 23:43:56,38.70916224,-77.48713689,94,1,0,0,"Prince William, Virginia, US"
-44007,Providence,Rhode Island,US,2020-03-31 23:43:56,41.87064746,-71.57753536,208,0,0,0,"Providence, Rhode Island, US"
+44007,Providence,Rhode Island,US,2020-03-31 23:43:56,41.87064746,-71.57753536,208,10,0,0,"Providence, Rhode Island, US"
 8101,Pueblo,Colorado,US,2020-03-31 23:43:56,38.17359144,-104.5127437,21,2,0,0,"Pueblo, Colorado, US"
 5119,Pulaski,Arkansas,US,2020-03-31 23:43:56,34.77054088,-92.31355101,102,2,0,0,"Pulaski, Arkansas, US"
 13235,Pulaski,Georgia,US,2020-03-31 23:43:56,32.23334561,-83.47549959999998,3,0,0,0,"Pulaski, Georgia, US"
@@ -2436,3 +2436,4 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,West Bank and Gaza,2020-03-31 23:43:43,31.9522,35.2332,119,1,18,100,West Bank and Gaza
 ,,,Zambia,2020-03-31 23:43:43,-13.133897,27.849332,35,0,0,35,Zambia
 ,,,Zimbabwe,2020-03-31 23:43:43,-19.015438,29.154857,8,1,0,7,Zimbabwe
+,,Unknown,China,2020-03-31 23:43:56,,,0,0,0,0,"Unknown, China"

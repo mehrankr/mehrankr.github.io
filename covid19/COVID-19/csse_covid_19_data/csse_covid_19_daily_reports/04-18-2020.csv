@@ -618,7 +618,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 16037,Custer,Idaho,US,2020-04-18 22:32:47,44.24186819,-114.2855494,2,0,0,2,"Custer, Idaho, US"
 31041,Custer,Nebraska,US,2020-04-18 22:32:47,41.39374521,-99.72805369,18,0,0,18,"Custer, Nebraska, US"
 40039,Custer,Oklahoma,US,2020-04-18 22:32:47,35.63853802,-99.00170785,7,0,0,7,"Custer, Oklahoma, US"
-39035,Cuyahoga,Ohio,US,2020-04-18 22:32:47,41.424119,-81.65918339,1453,71,0,1401,"Cuyahoga, Ohio, US"
+39035,Cuyahoga,Ohio,US,2020-04-18 22:32:47,41.424119,-81.65918339,1453,72,0,1401,"Cuyahoga, Ohio, US"
 13083,Dade,Georgia,US,2020-04-18 22:32:47,34.8549167,-85.50490424,8,1,0,7,"Dade, Georgia, US"
 27037,Dakota,Minnesota,US,2020-04-18 22:32:47,44.67172617,-93.06299363,113,5,0,108,"Dakota, Minnesota, US"
 31043,Dakota,Nebraska,US,2020-04-18 22:32:47,42.39040144,-96.56656425,22,0,0,22,"Dakota, Nebraska, US"
@@ -1101,7 +1101,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 37093,Hoke,North Carolina,US,2020-04-18 22:32:47,35.01888303,-79.23651674,23,0,0,23,"Hoke, North Carolina, US"
 12059,Holmes,Florida,US,2020-04-18 22:32:47,30.86747479,-85.81319222,5,0,0,5,"Holmes, Florida, US"
 28051,Holmes,Mississippi,US,2020-04-18 22:32:47,33.12345854,-90.08923538,58,4,0,54,"Holmes, Mississippi, US"
-39075,Holmes,Ohio,US,2020-04-18 22:32:47,40.56163713,-81.92635677,3,2,0,3,"Holmes, Ohio, US"
+39075,Holmes,Ohio,US,2020-04-18 22:32:47,40.56163713,-81.92635677,3,1,0,3,"Holmes, Ohio, US"
 29087,Holt,Missouri,US,2020-04-18 22:32:47,40.09799248,-95.2163888,1,0,0,1,"Holt, Missouri, US"
 15003,Honolulu,Hawaii,US,2020-04-18 22:32:47,21.45803166,-157.9712182,382,6,0,376,"Honolulu, Hawaii, US"
 48221,Hood,Texas,US,2020-04-18 22:32:47,32.42990927,-97.83242024,17,3,0,14,"Hood, Texas, US"
@@ -1794,7 +1794,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 36061,New York City,New York,US,2020-04-18 22:32:47,40.7672726,-73.97152637,135572,13202,0,122370,"New York City, New York, US"
 26123,Newaygo,Michigan,US,2020-04-18 22:32:47,43.554374,-85.80070107,7,0,0,7,"Newaygo, Michigan, US"
 45071,Newberry,South Carolina,US,2020-04-18 22:32:47,34.28629098,-81.59935761,23,1,0,22,"Newberry, South Carolina, US"
-44005,Newport,Rhode Island,US,2020-04-18 22:32:47,41.5642026,-71.26569799,103,0,0,103,"Newport, Rhode Island, US"
+44005,Newport,Rhode Island,US,2020-04-18 22:32:47,41.5642026,-71.26569799,103,3,0,103,"Newport, Rhode Island, US"
 51700,Newport News,Virginia,US,2020-04-18 22:32:47,37.08166899,-76.51754109,102,1,0,101,"Newport News, Virginia, US"
 5101,Newton,Arkansas,US,2020-04-18 22:32:47,35.91947491,-93.21612969,2,0,0,2,"Newton, Arkansas, US"
 13217,Newton,Georgia,US,2020-04-18 22:32:47,33.55514538,-83.8454714,121,3,0,118,"Newton, Georgia, US"
@@ -2045,7 +2045,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 24033,Prince George's,Maryland,US,2020-04-18 22:32:47,38.83070039,-76.8496441,3160,95,0,3065,"Prince George's, Maryland, US"
 51153,Prince William,Virginia,US,2020-04-18 22:32:47,38.70916224,-77.48713689,700,1,0,699,"Prince William, Virginia, US"
 2198,Prince of Wales-Hyder,Alaska,US,2020-04-18 22:32:47,55.76261984,-133.0511621,2,0,0,2,"Prince of Wales-Hyder, Alaska, US"
-44007,Providence,Rhode Island,US,2020-04-18 22:32:47,41.87064746,-71.57753536,2703,3,0,2700,"Providence, Rhode Island, US"
+44007,Providence,Rhode Island,US,2020-04-18 22:32:47,41.87064746,-71.57753536,2703,129,0,2700,"Providence, Rhode Island, US"
 8099,Prowers,Colorado,US,2020-04-18 22:32:47,37.95544985,-102.3926052,1,0,0,1,"Prowers, Colorado, US"
 8101,Pueblo,Colorado,US,2020-04-18 22:32:47,38.17359144,-104.5127437,78,6,0,72,"Pueblo, Colorado, US"
 5119,Pulaski,Arkansas,US,2020-04-18 22:32:47,34.77054088,-92.31355101,368,12,0,356,"Pulaski, Arkansas, US"
@@ -3054,3 +3054,4 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Yemen,2020-04-18 22:32:28,15.552727,48.516388,1,0,0,1,Yemen
 ,,,Zambia,2020-04-18 22:32:28,-13.133897,27.849332,57,2,33,22,Zambia
 ,,,Zimbabwe,2020-04-18 22:32:28,-19.015438,29.154857,25,3,2,20,Zimbabwe
+,,Unknown,China,2020-04-18 22:32:47,,,0,0,0,0,"Unknown, China"

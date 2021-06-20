@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "30/05/2021"
+date: "20/06/2021"
 output:
   pdf_document: default
   html_document:
@@ -486,3 +486,5 @@ P = ggplot(moltendf[moltendf$value > 0,], aes(x=date, y=value, group=`Province/S
   xlab("Date as of first Canadian death")
 plot(P)
 ```
+
+

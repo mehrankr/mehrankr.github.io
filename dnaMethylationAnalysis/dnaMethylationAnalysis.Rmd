@@ -1,7 +1,7 @@
 ---
 title: "Epigenomics, with focus on the methylome"
 author: "Mehran Karimzadeh"
-date: "June 9th, 2020"
+date: "June 24th, 2021"
 output:
   xaringan::moon_reader:
     chakra: libs/remark-latest.min.js
@@ -45,31 +45,74 @@ code.bash{
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 ## Outline
 
+* Introduction to WGBS
+
+--
 
 * Introduction to submitting jobs in batch on Slurm
 
 --
 
-* Introduction to epigenomics
-
---
-
-  + Assessing transcription factor binding
-
---
-
-  + Chromatin accessibility
-  
---
-
-  + Assessing nucleotide modifications
+* Reviewing epigenomics
 
 --
 
 * Methylome workshop
+
+---
+## Whole-genome bisulfite sequencing (WGBS)
+
+* How WGBS is different than other types of DNA sequencing?
+
+--
+
+* What are the pros of WGBS?
+
+--
+
+* What are the cons of WGBS?
+
+--
+
+* What type of information can you get from WGBS?
+
+---
+## Excercise
+
+What do you think is the order of the following statements?
+
+* Aligning with bwa-meth
+
+* Copy fastq files from a shared folder
+
+* Download the reference genome
+
+* Extracting CpG methylation estimates
+
+* Identifying differentially methylated regions
+
+* Index the reference genome
+
+* Investigating genes affected by differential methylation
+
+* Trimming fastq files with trim galore
+
+* Visualizing methylation at CpG islands
+
+---
+## Introduction to high performance computing
+
+Handling genomic datasets requires:
+
+* Secure and efficient data storage
+
+* Computational power for parallel processing and analysis
+
+* Efficient use of hardware by people with access to the datasets
+
+* How do you think a high performance computing server, such as SciNet teaching cluster, varies from your laptop?
 
 ---
 ## How can we run a program on the cluster?
@@ -211,88 +254,6 @@ digraph boxes_and_circles {
 --
 
 * Enrichment of differentially methylated regions in promoters, CpG islands, etc.
-
----
-## Limitations of ChIP-seq
-
-* Requires 1 million to 100 million cells (depending the sample source and antibody specificity)
-
---
-
-* Ideally requires an input or IgG control on each sample
-
---
-
-* Similar to all antibody-based assays: Specificity and cross-reactivity of many antibodies limits interpretation of the results
-
----
-## Identifying the accessible chromatin
-
-* Instead of identifying the exact nature of proteins bound to each genomic region, footprint of proteins on chromatin provides valuable information as well
-
---
-
-* DNase-seq identifies parts of the genome protected from DNase-I digestion
-
----
-
-```{r, out.width = "600px", echo=FALSE}
-knitr::include_graphics("dnaseseq.png")
-```
-
----
-### Can you imagine a scenario that performing DNase-seq on a patient's sample could provide clinically usable information?
-
-
----
-## Cytosine methylation --- biology
-
-* Cytosine methylation regulates X chromosome inactivation in most female mammals
-
---
-
-* It also regulates imprinted genes which express only from one of their two copies
-
---
-
-* With exceptions during development, most CpG islands at the promoter of genes do not show methylation across different tissues
-
--- 
-
-* CpG islands often coincide with active promoters of germ cells and DNA replication origins
-
-
----
-## Cytosine methylation --- function
-
-* Many chromatin binding proteins, including transcription factors, bind to DNA based on their sequence specificity
-
---
-
-* Addition of a hydrophobic functional group such as methylation, affects electrostatic interactions between DNA, histone, and other chromatin binding proteins
-
---
-
-* On a genome wide scale, highly methylated regions are densely packed by histones and are transcriptionally repressed
-
---
-
-* DNA methylation can also increase gene expression, by interfering with binding of repressive chromatin binding factors for example
-
----
-
-## Cytosine methylation --- evolution
-
-* Methylated cytosine could be deaminated to Uracil without being recognized by DNA repair machinery
-
---
-
-* Global demethylation of primordial germ cells sustains the lifetime of CpG islands through generations
-
---
-
-* A hypothesis explaining the evolution of CpG islands suggests that their vicinity to origins of replication hints the involvement of DNA polymerase in expanding these regions in the germ cells
-
 
 
 ---

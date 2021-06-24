@@ -292,7 +292,7 @@ knitr::include_graphics("mw0.jpg")
 mkdir -p $SCRATCH/Ref
 cd $SCRATCH/Ref
 wget ftp://ftp.ensembl.org/pub/release-96/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
-gunzip Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
+zcat Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz | sed 's/>22/>chr22/' > Homo_sapiens.GRCh38.dna.chromosome.22.fa
 ```
 
 * Index FASTA file
@@ -375,7 +375,7 @@ knitr::include_graphics("mw1.jpg")
 LOGDIR=$SCRATCH/Logs # Creates a new variable 
 SCRIPTDIR=$SCRATCH/Scripts # For scripts that run different programs
 mkdir -p $SCRIPTDIR $LOGDIR # Creating multiple folders simultaneously
-cd $SCIPTDIR # Change diretory
+cd $SCRIPTDIR # Change diretory
 FASTQDIR=$SCRATCH/newFastqFilesChr22 # PAth to our untrimmed fastq files
 FQFOLDERS=($(ls $FASTQDIR)) # Arrays
 OUTMAIN=$SCRATCH/trimmedFastqsChr22
@@ -417,7 +417,7 @@ knitr::include_graphics("mw1.jpg")
 * Write a script to generate <filename>_Align.sh scripts for aligning fastq files and submit them to cluster with sbatch
 
 ```{bash eval=FALSE}
-cd $SCIPTDIR
+cd $SCRIPTDIR
 REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
 FASTQDIR=$SCRATCH/trimmedFastqsChr22
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22

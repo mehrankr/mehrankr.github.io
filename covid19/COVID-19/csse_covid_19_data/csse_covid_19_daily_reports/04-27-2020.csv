@@ -1038,7 +1038,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 20075,Hamilton,Kansas,US,2020-04-28 02:30:51,37.99978709,-101.7921066,2,0,0,2,"Hamilton, Kansas, US"
 31081,Hamilton,Nebraska,US,2020-04-28 02:30:51,40.87349452,-98.02099117,41,2,0,39,"Hamilton, Nebraska, US"
 36041,Hamilton,New York,US,2020-04-26 00:00:00,43.66146647,-74.49721957,3,0,0,3,"Hamilton, New York, US"
-39061,Hamilton,Ohio,US,2020-04-28 02:30:51,39.19673558,-84.54502924,1048,67,0,992,"Hamilton, Ohio, US"
+39061,Hamilton,Ohio,US,2020-04-28 02:30:51,39.19673558,-84.54502924,1048,66,0,992,"Hamilton, Ohio, US"
 47065,Hamilton,Tennessee,US,2020-04-28 02:30:51,35.17670231,-85.16652245,146,13,0,133,"Hamilton, Tennessee, US"
 48193,Hamilton,Texas,US,2020-04-28 02:30:51,31.70470573,-98.11083887,5,0,0,5,"Hamilton, Texas, US"
 46057,Hamlin,South Dakota,US,2020-04-28 02:30:51,44.67385954,-97.18829593,2,0,0,2,"Hamlin, South Dakota, US"
@@ -1580,7 +1580,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 51113,Madison,Virginia,US,2020-04-28 02:30:51,38.41531222,-78.28220331,14,0,0,14,"Madison, Virginia, US"
 19123,Mahaska,Iowa,US,2020-04-28 02:30:51,41.33521503,-92.64083907,9,1,0,8,"Mahaska, Iowa, US"
 27087,Mahnomen,Minnesota,US,2020-04-28 02:30:51,47.32557075,-95.80921485,1,0,0,1,"Mahnomen, Minnesota, US"
-39099,Mahoning,Ohio,US,2020-04-28 02:30:51,41.01631101,-80.77287029,764,78,0,699,"Mahoning, Ohio, US"
+39099,Mahoning,Ohio,US,2020-04-28 02:30:51,41.01631101,-80.77287029,764,79,0,699,"Mahoning, Ohio, US"
 40093,Major,Oklahoma,US,2020-04-28 02:30:51,36.31149996,-98.53467076,2,1,0,1,"Major, Oklahoma, US"
 41045,Malheur,Oregon,US,2020-04-28 02:30:51,43.1937027,-117.6227395,7,0,0,7,"Malheur, Oregon, US"
 51683,Manassas,Virginia,US,2020-04-28 02:30:51,38.7464321,-77.48509905,165,2,0,163,"Manassas, Virginia, US"
@@ -2210,7 +2210,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 33015,Rockingham,New Hampshire,US,2020-04-28 02:30:51,42.98499744,-71.12883377,643,1,0,642,"Rockingham, New Hampshire, US"
 37157,Rockingham,North Carolina,US,2020-04-28 02:30:51,36.39593137,-79.77504841,24,2,0,22,"Rockingham, North Carolina, US"
 51165,Rockingham,Virginia,US,2020-04-28 02:30:51,38.51006137,-78.87260325,193,1,0,192,"Rockingham, Virginia, US"
-36087,Rockland,New York,US,2020-04-26 00:00:00,41.15027894,-74.02560498,11366,481,0,10885,"Rockland, New York, US"
+36087,Rockland,New York,US,2020-04-26 00:00:00,41.15027894,-74.02560498,11366,387,0,10885,"Rockland, New York, US"
 48397,Rockwall,Texas,US,2020-04-28 02:30:51,32.89779518,-96.40771592,56,1,0,55,"Rockwall, Texas, US"
 40131,Rogers,Oklahoma,US,2020-04-28 02:30:51,36.37004357,-95.60406759,47,3,0,44,"Rogers, Oklahoma, US"
 38079,Rolette,North Dakota,US,2020-04-28 02:30:51,48.77245354,-99.84097493,1,0,0,1,"Rolette, North Dakota, US"
@@ -2270,7 +2270,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 17167,Sangamon,Illinois,US,2020-04-28 02:30:51,39.75836914,-89.65872023,113,8,0,105,"Sangamon, Illinois, US"
 26151,Sanilac,Michigan,US,2020-04-28 02:30:51,43.42406072,-82.82055898,34,4,0,30,"Sanilac, Michigan, US"
 6083,Santa Barbara,California,US,2020-04-28 02:30:51,34.65329488,-120.0188492,471,7,0,464,"Santa Barbara, California, US"
-6085,Santa Clara,California,US,2020-04-28 02:30:51,37.23104908,-121.6970462,2105,103,0,2002,"Santa Clara, California, US"
+6085,Santa Clara,California,US,2020-04-28 02:30:51,37.23104908,-121.6970462,2105,105,0,2002,"Santa Clara, California, US"
 4023,Santa Cruz,Arizona,US,2020-04-28 02:30:51,31.52508998,-110.8479088,30,0,0,30,"Santa Cruz, Arizona, US"
 6087,Santa Cruz,California,US,2020-04-28 02:30:51,37.05580291,-122.0066524,124,2,0,122,"Santa Cruz, California, US"
 35049,Santa Fe,New Mexico,US,2020-04-28 02:30:51,35.50708973,-105.9774716,95,0,0,95,"Santa Fe, New Mexico, US"
@@ -2941,7 +2941,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Prince Edward Island,Canada,2020-04-28 02:30:53,46.5107,-63.4168,26,0,0,26,"Prince Edward Island, Canada"
 72,,Puerto Rico,US,2020-04-28 02:30:51,18.2208,-66.5901,1389,84,0,1305,"Puerto Rico, US"
 ,,Qinghai,China,2020-02-23 11:19:02,35.7452,95.9956,18,0,18,0,"Qinghai, China"
-,,Quebec,Canada,2020-04-28 02:30:53,52.9399,-73.5491,24983,2318,0,23383,"Quebec, Canada"
+,,Quebec,Canada,2020-04-28 02:30:53,52.9399,-73.5491,26988,2318,0,23383,"Quebec, Canada"
 ,,Recovered,Canada,2020-04-28 02:30:53,,,0,0,18268,-18268,"Recovered, Canada"
 ,,Recovered,US,2020-04-28 02:30:51,,,0,0,111424,-111424,"Recovered, US"
 ,,Reunion,France,2020-04-28 02:30:32,-21.1151,55.5364,418,0,300,118,"Reunion, France"
@@ -3155,5 +3155,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Western Australia,Australia,2020-04-28 02:31:20,-31.9505,115.8605,549,8,486,55,"Western Australia, Australia"
 ,,Unknown,China,2020-04-28 02:30:51,,,0,0,0,0,"Unknown, China"
 ,,,Kiribati,2020-04-28 02:30:51,-3.3704,-168.734,0,0,0,0,Kiribati
-,,,Palau,2020-04-28 02:30:51,-3.3704,-168.734,0,0,0,0,Palau
-,,Cook Islands,New Zealand,2020-04-28 02:30:51,-3.3704,-168.734,0,0,0,0,"Cook Islands, New Zealand"
+,,,Palau,2020-04-28 02:30:51,7.515,134.5825,0,0,0,0,Palau
+,,Cook Islands,New Zealand,2020-04-28 02:30:51,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
+,,,Summer Olympics 2020,2020-04-28 02:30:51,35.6491,139.7737,0,0,0,0,Summer Olympics 2020

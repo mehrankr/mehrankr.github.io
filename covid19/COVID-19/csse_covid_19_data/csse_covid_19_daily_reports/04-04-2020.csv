@@ -879,7 +879,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 18057,Hamilton,Indiana,US,4/4/20 23:34,40.07306535,-86.05244729,265,4,0,0,"Hamilton, Indiana, US"
 31081,Hamilton,Nebraska,US,4/4/20 23:34,40.87349452,-98.02099117,4,0,0,0,"Hamilton, Nebraska, US"
 36041,Hamilton,New York,US,4/4/20 23:34,43.66146647,-74.49721957,2,0,0,0,"Hamilton, New York, US"
-39061,Hamilton,Ohio,US,4/4/20 23:34,39.19673558,-84.54502924,288,15,0,0,"Hamilton, Ohio, US"
+39061,Hamilton,Ohio,US,4/4/20 23:34,39.19673558,-84.54502924,288,14,0,0,"Hamilton, Ohio, US"
 47065,Hamilton,Tennessee,US,4/4/20 23:34,35.17670231,-85.16652245,71,8,0,0,"Hamilton, Tennessee, US"
 46057,Hamlin,South Dakota,US,4/4/20 23:34,44.67385954,-97.18829593,1,0,0,0,"Hamlin, South Dakota, US"
 25013,Hampden,Massachusetts,US,4/4/20 23:34,42.13440424,-72.63235561,733,34,0,0,"Hampden, Massachusetts, US"
@@ -1846,7 +1846,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 33015,Rockingham,New Hampshire,US,4/4/20 23:34,42.98499744,-71.12883377,190,1,0,0,"Rockingham, New Hampshire, US"
 37157,Rockingham,North Carolina,US,4/4/20 23:34,36.39593137,-79.77504841,5,1,0,0,"Rockingham, North Carolina, US"
 51165,Rockingham,Virginia,US,4/4/20 23:34,38.51006137,-78.87260325,15,0,0,0,"Rockingham, Virginia, US"
-36087,Rockland,New York,US,4/4/20 23:34,41.15027894,-74.02560498,4872,69,0,0,"Rockland, New York, US"
+36087,Rockland,New York,US,4/4/20 23:34,41.15027894,-74.02560498,4872,71,0,0,"Rockland, New York, US"
 48397,Rockwall,Texas,US,4/4/20 23:34,32.89779518,-96.40771592,11,0,0,0,"Rockwall, Texas, US"
 40131,Rogers,Oklahoma,US,4/4/20 23:34,36.37004357,-95.60406759,12,0,0,0,"Rogers, Oklahoma, US"
 30085,Roosevelt,Montana,US,4/4/20 23:34,48.29607488,-105.0079268,1,0,0,0,"Roosevelt, Montana, US"
@@ -2474,7 +2474,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Prince Edward Island,Canada,4/4/20 23:40,46.5107,-63.4168,22,0,0,0,"Prince Edward Island, Canada"
 72,,Puerto Rico,US,4/4/20 23:34,18.2208,-66.5901,452,18,0,0,"Puerto Rico, US"
 ,,Qinghai,China,2/23/20 11:19,35.7452,95.9956,18,0,18,0,"Qinghai, China"
-,,Quebec,Canada,4/4/20 23:40,52.9399,-73.5491,6101,203,0,0,"Quebec, Canada"
+,,Quebec,Canada,4/4/20 23:40,52.9399,-73.5491,8029,203,0,0,"Quebec, Canada"
 ,,Queensland,Australia,4/4/20 23:41,-27.4698,153.0251,900,4,8,888,"Queensland, Australia"
 ,,Recovered,Canada,4/4/20 23:40,,,0,0,2577,0,"Recovered, Canada"
 ,,Recovered,US,4/4/20 23:34,,,0,0,14652,0,"Recovered, US"
@@ -2682,5 +2682,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,unassigned,Wyoming,US,4/4/20 23:34,,,0,0,0,0,"unassigned, Wyoming, US"
 ,,Unknown,China,4/4/20 23:34,,,0,0,0,0,"Unknown, China"
 ,,,Kiribati,4/4/20 23:34,-3.3704,-168.734,0,0,0,0,Kiribati
-,,,Palau,4/4/20 23:34,-3.3704,-168.734,0,0,0,0,Palau
-,,Cook Islands,New Zealand,4/4/20 23:34,-3.3704,-168.734,0,0,0,0,"Cook Islands, New Zealand"
+,,,Palau,4/4/20 23:34,7.515,134.5825,0,0,0,0,Palau
+,,Cook Islands,New Zealand,4/4/20 23:34,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
+,,,Summer Olympics 2020,4/4/20 23:34,35.6491,139.7737,0,0,0,0,Summer Olympics 2020

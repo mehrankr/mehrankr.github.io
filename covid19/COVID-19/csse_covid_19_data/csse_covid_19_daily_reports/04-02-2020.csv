@@ -845,7 +845,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 18057,Hamilton,Indiana,US,4/2/20 23:25,40.07306535,-86.05244729,207,4,0,0,"Hamilton, Indiana, US"
 31081,Hamilton,Nebraska,US,4/2/20 23:25,40.87349452,-98.02099117,2,0,0,0,"Hamilton, Nebraska, US"
 36041,Hamilton,New York,US,4/2/20 23:25,43.66146647,-74.49721957,2,0,0,0,"Hamilton, New York, US"
-39061,Hamilton,Ohio,US,4/2/20 23:25,39.19673558,-84.54502924,178,12,0,0,"Hamilton, Ohio, US"
+39061,Hamilton,Ohio,US,4/2/20 23:25,39.19673558,-84.54502924,178,11,0,0,"Hamilton, Ohio, US"
 47065,Hamilton,Tennessee,US,4/2/20 23:25,35.17670231,-85.16652245,61,5,0,0,"Hamilton, Tennessee, US"
 46057,Hamlin,South Dakota,US,4/2/20 23:25,44.67385954,-97.18829593,1,0,0,0,"Hamlin, South Dakota, US"
 25013,Hampden,Massachusetts,US,4/2/20 23:25,42.13440424,-72.63235561,546,19,0,0,"Hampden, Massachusetts, US"
@@ -1758,7 +1758,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 33015,Rockingham,New Hampshire,US,4/2/20 23:25,42.98499744,-71.12883377,170,1,0,0,"Rockingham, New Hampshire, US"
 37157,Rockingham,North Carolina,US,4/2/20 23:25,36.39593137,-79.77504841,2,1,0,0,"Rockingham, North Carolina, US"
 51165,Rockingham,Virginia,US,4/2/20 23:25,38.51006137,-78.87260325,11,0,0,0,"Rockingham, Virginia, US"
-36087,Rockland,New York,US,4/2/20 23:25,41.15027894,-74.02560498,3751,18,0,0,"Rockland, New York, US"
+36087,Rockland,New York,US,4/2/20 23:25,41.15027894,-74.02560498,3751,0,0,0,"Rockland, New York, US"
 48397,Rockwall,Texas,US,4/2/20 23:25,32.89779518,-96.40771592,10,0,0,0,"Rockwall, Texas, US"
 40131,Rogers,Oklahoma,US,4/2/20 23:25,36.37004357,-95.60406759,8,0,0,0,"Rogers, Oklahoma, US"
 38079,Rolette,North Dakota,US,4/2/20 23:25,48.77245354,-99.84097493,0,0,0,0,"Rolette, North Dakota, US"
@@ -1807,7 +1807,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 17167,Sangamon,Illinois,US,4/2/20 23:25,39.75836914,-89.65872023,18,2,0,0,"Sangamon, Illinois, US"
 26151,Sanilac,Michigan,US,4/2/20 23:25,43.42406072,-82.82055898,8,1,0,0,"Sanilac, Michigan, US"
 6083,Santa Barbara,California,US,4/2/20 23:25,34.65329488,-120.0188492,111,1,0,0,"Santa Barbara, California, US"
-6085,Santa Clara,California,US,4/2/20 23:25,37.23104908,-121.6970462,1019,36,0,0,"Santa Clara, California, US"
+6085,Santa Clara,California,US,4/2/20 23:25,37.23104908,-121.6970462,1019,38,0,0,"Santa Clara, California, US"
 4023,Santa Cruz,Arizona,US,4/2/20 23:25,31.52508998,-110.8479088,3,0,0,0,"Santa Cruz, Arizona, US"
 6087,Santa Cruz,California,US,4/2/20 23:25,37.05580291,-122.0066524,54,1,0,0,"Santa Cruz, California, US"
 35049,Santa Fe,New Mexico,US,4/2/20 23:25,35.50708973,-105.9774716,48,0,0,0,"Santa Fe, New Mexico, US"
@@ -2365,7 +2365,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Prince Edward Island,Canada,4/2/20 23:31,46.5107,-63.4168,22,0,0,0,"Prince Edward Island, Canada"
 72,,Puerto Rico,US,4/2/20 23:25,18.2208,-66.5901,316,12,0,0,"Puerto Rico, US"
 ,,Qinghai,China,2/23/20 11:19,35.7452,95.9956,18,0,18,0,"Qinghai, China"
-,,Quebec,Canada,4/2/20 23:31,52.9399,-73.5491,5518,121,0,0,"Quebec, Canada"
+,,Quebec,Canada,4/2/20 23:31,52.9399,-73.5491,6453,121,0,0,"Quebec, Canada"
 ,,Queensland,Australia,4/2/20 23:32,-27.4698,153.0251,835,4,8,823,"Queensland, Australia"
 ,,Recovered,Canada,4/2/20 23:31,,,0,0,1735,0,"Recovered, Canada"
 ,,Recovered,US,4/2/20 23:25,,,0,0,9001,0,"Recovered, US"
@@ -2573,5 +2573,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,unassigned,Wyoming,US,4/2/20 23:25,,,0,0,0,0,"unassigned, Wyoming, US"
 ,,Unknown,China,4/2/20 23:25,,,0,0,0,0,"Unknown, China"
 ,,,Kiribati,4/2/20 23:25,-3.3704,-168.734,0,0,0,0,Kiribati
-,,,Palau,4/2/20 23:25,-3.3704,-168.734,0,0,0,0,Palau
-,,Cook Islands,New Zealand,4/2/20 23:25,-3.3704,-168.734,0,0,0,0,"Cook Islands, New Zealand"
+,,,Palau,4/2/20 23:25,7.515,134.5825,0,0,0,0,Palau
+,,Cook Islands,New Zealand,4/2/20 23:25,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
+,,,Summer Olympics 2020,4/2/20 23:25,35.6491,139.7737,0,0,0,0,Summer Olympics 2020

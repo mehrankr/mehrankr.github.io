@@ -1002,7 +1002,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 20075,Hamilton,Kansas,US,2020-04-17 23:30:52,37.99978709,-101.7921066,1,0,0,1,"Hamilton, Kansas, US"
 31081,Hamilton,Nebraska,US,2020-04-17 23:30:52,40.87349452,-98.02099117,14,0,0,14,"Hamilton, Nebraska, US"
 36041,Hamilton,New York,US,2020-04-17 23:30:52,43.66146647,-74.49721957,3,0,0,3,"Hamilton, New York, US"
-39061,Hamilton,Ohio,US,2020-04-17 23:30:52,39.19673558,-84.54502924,658,39,0,628,"Hamilton, Ohio, US"
+39061,Hamilton,Ohio,US,2020-04-17 23:30:52,39.19673558,-84.54502924,658,38,0,628,"Hamilton, Ohio, US"
 47065,Hamilton,Tennessee,US,2020-04-17 23:30:52,35.17670231,-85.16652245,110,11,0,99,"Hamilton, Tennessee, US"
 48193,Hamilton,Texas,US,2020-04-17 23:30:52,31.70470573,-98.11083887,5,0,0,5,"Hamilton, Texas, US"
 46057,Hamlin,South Dakota,US,2020-04-17 23:30:52,44.67385954,-97.18829593,2,0,0,2,"Hamlin, South Dakota, US"
@@ -2189,7 +2189,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 17167,Sangamon,Illinois,US,2020-04-17 23:30:52,39.75836914,-89.65872023,58,3,0,55,"Sangamon, Illinois, US"
 26151,Sanilac,Michigan,US,2020-04-17 23:30:52,43.42406072,-82.82055898,27,3,0,24,"Sanilac, Michigan, US"
 6083,Santa Barbara,California,US,2020-04-17 23:30:52,34.65329488,-120.0188492,354,3,0,351,"Santa Barbara, California, US"
-6085,Santa Clara,California,US,2020-04-17 23:30:52,37.23104908,-121.6970462,1870,73,0,1797,"Santa Clara, California, US"
+6085,Santa Clara,California,US,2020-04-17 23:30:52,37.23104908,-121.6970462,1870,74,0,1797,"Santa Clara, California, US"
 4023,Santa Cruz,Arizona,US,2020-04-17 23:30:52,31.52508998,-110.8479088,14,0,0,14,"Santa Cruz, Arizona, US"
 6087,Santa Cruz,California,US,2020-04-17 23:30:52,37.05580291,-122.0066524,98,2,0,96,"Santa Cruz, California, US"
 35049,Santa Fe,New Mexico,US,2020-04-17 23:30:52,35.50708973,-105.9774716,79,0,0,79,"Santa Fe, New Mexico, US"
@@ -2837,7 +2837,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Prince Edward Island,Canada,2020-04-17 23:38:31,46.5107,-63.4168,26,0,0,26,"Prince Edward Island, Canada"
 72,,Puerto Rico,US,2020-04-17 23:30:52,18.2208,-66.5901,1068,58,0,1010,"Puerto Rico, US"
 ,,Qinghai,China,2020-02-23 11:19:02,35.7452,95.9956,18,0,18,0,"Qinghai, China"
-,,Quebec,Canada,2020-04-17 23:38:31,52.9399,-73.5491,16798,1176,0,16110,"Quebec, Canada"
+,,Quebec,Canada,2020-04-17 23:38:31,52.9399,-73.5491,18860,1176,0,16110,"Quebec, Canada"
 ,,Queensland,Australia,2020-04-17 23:38:48,-27.4698,153.0251,1007,5,442,560,"Queensland, Australia"
 ,,Recovered,Canada,2020-04-17 23:38:31,,,0,0,10545,-10545,"Recovered, Canada"
 ,,Recovered,US,2020-04-17 23:30:52,,,0,0,58545,-58545,"Recovered, US"
@@ -3048,5 +3048,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Zimbabwe,2020-04-17 23:30:32,-19.015438,29.154857,24,3,2,19,Zimbabwe
 ,,Unknown,China,2020-04-17 23:30:52,,,0,0,0,0,"Unknown, China"
 ,,,Kiribati,2020-04-17 23:30:52,-3.3704,-168.734,0,0,0,0,Kiribati
-,,,Palau,2020-04-17 23:30:52,-3.3704,-168.734,0,0,0,0,Palau
-,,Cook Islands,New Zealand,2020-04-17 23:30:52,-3.3704,-168.734,0,0,0,0,"Cook Islands, New Zealand"
+,,,Palau,2020-04-17 23:30:52,7.515,134.5825,0,0,0,0,Palau
+,,Cook Islands,New Zealand,2020-04-17 23:30:52,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
+,,,Summer Olympics 2020,2020-04-17 23:30:52,35.6491,139.7737,0,0,0,0,Summer Olympics 2020

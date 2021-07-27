@@ -860,7 +860,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 18057,Hamilton,Indiana,US,2020-04-03 22:46:37,40.07306535,-86.05244729,220,4,0,0,"Hamilton, Indiana, US"
 31081,Hamilton,Nebraska,US,2020-04-03 22:46:37,40.87349452,-98.02099117,3,0,0,0,"Hamilton, Nebraska, US"
 36041,Hamilton,New York,US,2020-04-03 22:46:37,43.66146647,-74.49721957,2,0,0,0,"Hamilton, New York, US"
-39061,Hamilton,Ohio,US,2020-04-03 22:46:37,39.19673558,-84.54502924,203,13,0,0,"Hamilton, Ohio, US"
+39061,Hamilton,Ohio,US,2020-04-03 22:46:37,39.19673558,-84.54502924,203,12,0,0,"Hamilton, Ohio, US"
 47065,Hamilton,Tennessee,US,2020-04-03 22:46:37,35.17670231,-85.16652245,67,5,0,0,"Hamilton, Tennessee, US"
 46057,Hamlin,South Dakota,US,2020-04-03 22:46:37,44.67385954,-97.18829593,1,0,0,0,"Hamlin, South Dakota, US"
 25013,Hampden,Massachusetts,US,2020-04-03 22:46:37,42.13440424,-72.63235561,661,27,0,0,"Hampden, Massachusetts, US"
@@ -1802,7 +1802,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 33015,Rockingham,New Hampshire,US,2020-04-03 22:46:37,42.98499744,-71.12883377,170,1,0,0,"Rockingham, New Hampshire, US"
 37157,Rockingham,North Carolina,US,2020-04-03 22:46:37,36.39593137,-79.77504841,3,1,0,0,"Rockingham, North Carolina, US"
 51165,Rockingham,Virginia,US,2020-04-03 22:46:37,38.51006137,-78.87260325,11,0,0,0,"Rockingham, Virginia, US"
-36087,Rockland,New York,US,2020-04-03 22:46:37,41.15027894,-74.02560498,4289,42,0,0,"Rockland, New York, US"
+36087,Rockland,New York,US,2020-04-03 22:46:37,41.15027894,-74.02560498,4289,0,0,0,"Rockland, New York, US"
 48397,Rockwall,Texas,US,2020-04-03 22:46:37,32.89779518,-96.40771592,10,0,0,0,"Rockwall, Texas, US"
 40131,Rogers,Oklahoma,US,2020-04-03 22:46:37,36.37004357,-95.60406759,10,0,0,0,"Rogers, Oklahoma, US"
 30085,Roosevelt,Montana,US,2020-04-03 22:46:37,48.29607488,-105.00792679999999,1,0,0,0,"Roosevelt, Montana, US"
@@ -1851,7 +1851,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 17167,Sangamon,Illinois,US,2020-04-03 22:46:37,39.75836914,-89.65872023,20,2,0,0,"Sangamon, Illinois, US"
 26151,Sanilac,Michigan,US,2020-04-03 22:46:37,43.42406072,-82.82055898,10,1,0,0,"Sanilac, Michigan, US"
 6083,Santa Barbara,California,US,2020-04-03 22:46:37,34.65329488,-120.0188492,139,1,0,0,"Santa Barbara, California, US"
-6085,Santa Clara,California,US,2020-04-03 22:46:37,37.23104908,-121.6970462,1019,36,0,0,"Santa Clara, California, US"
+6085,Santa Clara,California,US,2020-04-03 22:46:37,37.23104908,-121.6970462,1019,39,0,0,"Santa Clara, California, US"
 4023,Santa Cruz,Arizona,US,2020-04-03 22:46:37,31.52508998,-110.8479088,3,0,0,0,"Santa Cruz, Arizona, US"
 6087,Santa Cruz,California,US,2020-04-03 22:46:37,37.05580291,-122.0066524,57,1,0,0,"Santa Cruz, California, US"
 35049,Santa Fe,New Mexico,US,2020-04-03 22:46:37,35.50708973,-105.9774716,48,0,0,0,"Santa Fe, New Mexico, US"
@@ -2420,7 +2420,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,Prince Edward Island,Canada,2020-04-03 22:52:30,46.5107,-63.4168,22,0,0,0,"Prince Edward Island, Canada"
 72,,Puerto Rico,US,2020-04-03 22:46:37,18.2208,-66.5901,316,15,0,0,"Puerto Rico, US"
 ,,Qinghai,China,2020-02-23 11:19:02,35.7452,95.9956,18,0,18,0,"Qinghai, China"
-,,Quebec,Canada,2020-04-03 22:52:30,52.9399,-73.5491,6101,159,0,0,"Quebec, Canada"
+,,Quebec,Canada,2020-04-03 22:52:30,52.9399,-73.5491,7223,159,0,0,"Quebec, Canada"
 ,,Queensland,Australia,2020-04-03 22:52:45,-27.4698,153.0251,873,4,8,861,"Queensland, Australia"
 ,,Recovered,Canada,2020-04-03 22:52:30,,,0,0,2175,0,"Recovered, Canada"
 ,,Recovered,US,2020-04-03 22:46:37,,,0,0,9707,0,"Recovered, US"
@@ -2628,5 +2628,6 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,unassigned,Wyoming,US,2020-04-03 22:46:37,,,0,0,0,0,"unassigned, Wyoming, US"
 ,,Unknown,China,2020-04-03 22:46:37,,,0,0,0,0,"Unknown, China"
 ,,,Kiribati,2020-04-03 22:46:37,-3.3704,-168.734,0,0,0,0,Kiribati
-,,,Palau,2020-04-03 22:46:37,-3.3704,-168.734,0,0,0,0,Palau
-,,Cook Islands,New Zealand,2020-04-03 22:46:37,-3.3704,-168.734,0,0,0,0,"Cook Islands, New Zealand"
+,,,Palau,2020-04-03 22:46:37,7.515,134.5825,0,0,0,0,Palau
+,,Cook Islands,New Zealand,2020-04-03 22:46:37,-21.2367,-159.7777,0,0,0,0,"Cook Islands, New Zealand"
+,,,Summer Olympics 2020,2020-04-03 22:46:37,35.6491,139.7737,0,0,0,0,Summer Olympics 2020

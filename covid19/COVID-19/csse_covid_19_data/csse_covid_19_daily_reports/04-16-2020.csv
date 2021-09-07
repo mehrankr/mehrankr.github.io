@@ -2724,7 +2724,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 54105,Wirt,West Virginia,US,2020-04-16 23:30:51,39.02775007,-81.37473928,2,0,0,2,"Wirt, West Virginia, US"
 48497,Wise,Texas,US,2020-04-16 23:30:51,33.21570665,-97.65460265,7,1,0,6,"Wise, Texas, US"
 51195,Wise,Virginia,US,2020-04-16 23:30:51,36.9746148,-82.62410519,18,0,0,18,"Wise, Virginia, US"
-39173,Wood,Ohio,US,2020-04-16 23:30:51,41.36224827,-83.62285108,67,6,0,62,"Wood, Ohio, US"
+39173,Wood,Ohio,US,2020-04-16 23:30:51,41.36224827,-83.62285108,67,7,0,62,"Wood, Ohio, US"
 48499,Wood,Texas,US,2020-04-16 23:30:51,32.78722382,-95.38236368,6,0,0,6,"Wood, Texas, US"
 54107,Wood,West Virginia,US,2020-04-16 23:30:51,39.20967886,-81.5162836,25,0,0,25,"Wood, West Virginia, US"
 55141,Wood,Wisconsin,US,2020-04-16 23:30:51,44.45537896,-90.04158336,2,0,0,2,"Wood, Wisconsin, US"
@@ -2946,7 +2946,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Jamaica,2020-04-16 23:30:31,18.1096,-77.2975,143,5,21,117,Jamaica
 ,,,Japan,2020-04-16 23:30:31,36.204824,138.252924,8626,178,901,7547,Japan
 ,,,Jordan,2020-04-16 23:30:31,31.24,36.51,402,7,259,136,Jordan
-,,,Kazakhstan,2020-04-16 23:30:31,48.0196,66.9237,1402,17,277,1108,Kazakhstan
+,,,Kazakhstan,2020-04-16 23:30:31,48.0196,66.9237,1402,16,277,1108,Kazakhstan
 ,,,Kenya,2020-04-16 23:30:31,-0.0236,37.9062,234,11,53,170,Kenya
 ,,,"Korea, South",2020-04-16 23:30:31,35.90775700000001,127.766922,10613,229,7757,2627,"Korea, South"
 ,,,Kosovo,2020-04-16 23:30:31,42.602636,20.902977,449,11,79,359,Kosovo
@@ -3002,7 +3002,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Saint Lucia,2020-04-16 23:30:31,13.9094,-60.9789,15,0,11,4,Saint Lucia
 ,,,Saint Vincent and the Grenadines,2020-04-16 23:30:31,12.9843,-61.2872,12,0,1,11,Saint Vincent and the Grenadines
 ,,,Samoa,2020-04-16 23:38:03,-13.759,-172.1046,0,0,0,0,Samoa
-,,,San Marino,2020-04-16 23:30:31,43.9424,12.4578,426,38,55,333,San Marino
+,,,San Marino,2020-04-16 23:30:31,43.9424,12.4578,393,36,55,333,San Marino
 ,,,Sao Tome and Principe,2020-04-16 23:30:31,0.18636,6.613081,4,0,0,4,Sao Tome and Principe
 ,,,Saudi Arabia,2020-04-16 23:30:31,23.885942,45.079162,6380,83,990,5307,Saudi Arabia
 ,,,Senegal,2020-04-16 23:30:31,14.4974,-14.4524,335,2,194,139,Senegal
@@ -3020,7 +3020,7 @@ FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,Long_,Confirmed,Deaths
 ,,,Sudan,2020-04-16 23:30:31,12.8628,30.2176,32,5,4,23,Sudan
 ,,,Suriname,2020-04-16 23:30:31,3.9193,-56.0278,10,1,6,3,Suriname
 ,,,Sweden,2020-04-16 23:30:31,60.128161,18.643501,12540,1333,550,10657,Sweden
-,,,Switzerland,2020-04-16 23:30:31,46.8182,8.2275,26732,1281,15900,9551,Switzerland
+,,,Switzerland,2020-04-16 23:30:31,46.8182,8.2275,26732,1311,15900,9551,Switzerland
 ,,,Syria,2020-04-16 23:30:31,34.802075,38.99681500000001,33,2,5,26,Syria
 ,,,Taiwan*,2020-04-16 12:44:27,23.7,121.0,395,6,155,234,Taiwan*
 ,,,Tanzania,2020-04-16 23:30:31,-6.369028,34.888822,94,4,11,79,Tanzania

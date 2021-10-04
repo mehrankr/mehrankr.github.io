@@ -1,6 +1,6 @@
 ---
 title: "COVID-19 patients, deaths, and death rate"
-date: "02/09/2021"
+date: "04/10/2021"
 output:
   pdf_document: default
   html_document:
@@ -78,7 +78,7 @@ get_expected = function(datadf, rate=2, init=100){
   list.data = lapply(unique(datadf$variable), function(country){
     tempdf = datadf[datadf$variable==country, ]
     # idx_st = min(which(tempdf$value >= init))
-    idx_st = min(which(tempdf$date >= as.Date("2021-04-01")))
+    idx_st = min(which(tempdf$date >= as.Date("2021-09-01")))
     init_val = tempdf$value[idx_st]
     advals = sapply(1:nrow(tempdf), function(x){
       if(x > idx_st){

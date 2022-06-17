@@ -4,10 +4,10 @@
     <title>Epigenomics, with focus on the methylome</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mehran Karimzadeh" />
-    <script src="libs/header-attrs-2.1/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
-    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
     <script src="libs/viz-1.8.2/viz.js"></script>
     <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
     <script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
@@ -18,7 +18,7 @@ class: center, middle, inverse, title-slide
 
 # Epigenomics, with focus on the methylome
 ### Mehran Karimzadeh
-### June 24th, 2021
+### June 21st, 2022
 
 ---
 
@@ -171,6 +171,10 @@ done
 
 --
 
+  + Chromatin accessibility: ATAC-seq
+
+--
+
   + Histone modifications: ChIP-seq
 
 --
@@ -179,25 +183,25 @@ done
 
 --
 
-  + Short and long range DNA interactions: Chromatin capture, HiC, etc.
+  + Short and long range DNA interactions: Chromatin capture, HiC, Hi-ChIP, etc.
 
 --
 
-  + Chemical modifications of nucleotides: Methylation arrays and bisulfite sequencing
+  + Chemical modifications of nucleotides: Methylation arrays, MeDIP-seq, and bisulfite sequencing
 
 ---
 ## Bisulfite sequencing pipeline
 
-<div id="htmlwidget-da31acf7dc4274c2209c" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da31acf7dc4274c2209c">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0c9688854a94e2441b76" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0c9688854a94e2441b76">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 
 ## Question
 
 * Which important steps are missing here?
 
-<div id="htmlwidget-c357badd7f0fecdccc60" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c357badd7f0fecdccc60">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-43efb48e19e2a8712d98" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-43efb48e19e2a8712d98">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 ## Quality control
 
@@ -240,6 +244,24 @@ done
 
 &lt;img src="mw0.jpg" width="800px" /&gt;
 
+---
+## Troubleshooting guide
+
+Throughout this tutorial, you may see that you do not see the same output as the instructor.
+
+Feel free to ask for help.
+
+Some common reasons include:
+
+* You are not logged into the teaching cluster. 
+
+  * You can type `echo $HOSTNAME` to see if it returns `teach01.scinet.local` or not
+
+* Your session got disconnected and the environmental variables that you defined in the earlier steps are not initialized. 
+
+  * You can check if a variable is initialized by typing `echo $VARIABLENAME`. In the case of arrays, to see their elements, you can type `echo ${ARRAYNAME[@]}`.
+
+  * If these are not initialized, nothing will be printed and that means you need to go back to the first occurence of the variable or array and re-run the command.
 
 ---
 ## Indexing BWA-meth
@@ -257,9 +279,12 @@ zcat Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz | sed 's/&gt;22/&gt;chr22/' &gt
 * Index FASTA file
 
 ```bash
+salloc
 module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel
 bwameth.py index Homo_sapiens.GRCh38.dna.chromosome.22.fa
 ```
+
+* Expected run time is 3 minutes
 
 &lt;img src="mw1.jpg" width="800px" /&gt;
 
@@ -297,14 +322,14 @@ scp ~/Downloads/hg38CpgIslandsForChr22.bed username@teach.scinet.utoronto.ca:/sc
 
 
 ```bash
-/scratch/t/teachmmg3003/mmg3003ta002
+/scratch/m/mhoffman/karimzad
 ```
 
 * You can copy the fastq files from that directory to your scratch folder:
 
 
 ```bash
-cp -rf /scratch/t/teachmmg3003/mmg3003ta002/newFastqFilesChr22 $SCRATCH
+cp -rf /scratch/m/mhoffman/karimzad/newFastqFilesChr22 $SCRATCH
 ```
 
 * This folder contains all of the files from the pipeline we process.
@@ -525,8 +550,9 @@ cd ~/software/bin
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 chmod u+x fetchChromSizes
 ./fetchChromSizes hg38 &gt; $SCRATCH/Ref/hg38.chromsizes
-cat $SCRATCH/Ref/hg38.chromsizes |  sed 's/^chr//' &gt; $SCRATCH/Ref/GRCh38.chromsizes
 ```
+
+* How else can we extract chromosome sizes from a fasta file?
 
 &lt;img src="mw3.jpg" width="800px" /&gt;
 
@@ -544,7 +570,7 @@ for SAMPLE in ${SAMPLES[@]}
 do
   BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
   BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
-  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/GRCh38.chromsizes $MAINDIR/$SAMPLE/$BW
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
 done
 ```
 
@@ -611,7 +637,9 @@ metilene -a "H1-hESC" -b "leftVentricle" $SCRATCH/methylDackelOutputChr22/merged
 ---
 ## In-class assignment - open question
 
-* A recent study used DNA methylation arrays to compare white blood cells in 2,312 healthy individuals and 1,322 individuals with alzheimer's disease. They identified 5 methylation probes at the vicinity of NFE2 transcription factor with increased methylation in most alzheimer's disease patients. What do you think are the key aspects before we could consider these methylation probes as biomarkers of alzheimer's disease?
+* A recent study used DNA methylation arrays to compare white blood cells in 2,312 healthy individuals and 1,322 individuals with alzheimer's disease. They identified 5 methylation probes at the vicinity of NFE2 transcription factor with increased methylation in most Alzheimer's disease patients.
+
+* What do you think are the key points to investigate before conclusing these methylation probes as biomarkers of alzheimer's disease?
 
 ---
 ## Assignment

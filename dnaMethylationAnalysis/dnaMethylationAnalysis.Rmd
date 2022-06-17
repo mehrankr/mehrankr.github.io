@@ -1,7 +1,7 @@
 ---
 title: "Epigenomics, with focus on the methylome"
 author: "Mehran Karimzadeh"
-date: "June 24th, 2021"
+date: "June 21st, 2022"
 output:
   xaringan::moon_reader:
     chakra: libs/remark-latest.min.js
@@ -159,6 +159,10 @@ done
 
 --
 
+  + Chromatin accessibility: ATAC-seq
+
+--
+
   + Histone modifications: ChIP-seq
 
 --
@@ -167,11 +171,11 @@ done
 
 --
 
-  + Short and long range DNA interactions: Chromatin capture, HiC, etc.
+  + Short and long range DNA interactions: Chromatin capture, HiC, Hi-ChIP, etc.
 
 --
 
-  + Chemical modifications of nucleotides: Methylation arrays and bisulfite sequencing
+  + Chemical modifications of nucleotides: Methylation arrays, MeDIP-seq, and bisulfite sequencing
 
 ---
 ## Bisulfite sequencing pipeline
@@ -282,6 +286,24 @@ digraph boxes_and_circles {
 knitr::include_graphics("mw0.jpg")
 ```
 
+---
+## Troubleshooting guide
+
+Throughout this tutorial, you may see that you do not see the same output as the instructor.
+
+Feel free to ask for help.
+
+Some common reasons include:
+
+* You are not logged into the teaching cluster. 
+
+  * You can type `echo $HOSTNAME` to see if it returns `teach01.scinet.local` or not
+
+* Your session got disconnected and the environmental variables that you defined in the earlier steps are not initialized. 
+
+  * You can check if a variable is initialized by typing `echo $VARIABLENAME`. In the case of arrays, to see their elements, you can type `echo ${ARRAYNAME[@]}`.
+
+  * If these are not initialized, nothing will be printed and that means you need to go back to the first occurence of the variable or array and re-run the command.
 
 ---
 ## Indexing BWA-meth
@@ -297,9 +319,12 @@ zcat Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz | sed 's/>22/>chr22/' > Homo_sa
 
 * Index FASTA file
 ```{bash eval=FALSE}
+salloc
 module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel
 bwameth.py index Homo_sapiens.GRCh38.dna.chromosome.22.fa
 ```
+
+* Expected run time is 3 minutes
 
 ```{r, out.width = "800px", echo=FALSE}
 knitr::include_graphics("mw1.jpg")
@@ -339,13 +364,13 @@ knitr::include_graphics("mw1.jpg")
 * The following directory contains all of the pipeline for chromosome 22:
 
 ```{bash eval=FALSE}
-/scratch/t/teachmmg3003/mmg3003ta002
+/scratch/m/mhoffman/karimzad
 ```
 
 * You can copy the fastq files from that directory to your scratch folder:
 
 ```{bash eval=FALSE}
-cp -rf /scratch/t/teachmmg3003/mmg3003ta002/newFastqFilesChr22 $SCRATCH
+cp -rf /scratch/m/mhoffman/karimzad/newFastqFilesChr22 $SCRATCH
 ```
 
 * This folder contains all of the files from the pipeline we process.
@@ -576,8 +601,9 @@ cd ~/software/bin
 wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
 chmod u+x fetchChromSizes
 ./fetchChromSizes hg38 > $SCRATCH/Ref/hg38.chromsizes
-cat $SCRATCH/Ref/hg38.chromsizes |  sed 's/^chr//' > $SCRATCH/Ref/GRCh38.chromsizes
 ```
+
+* How else can we extract chromosome sizes from a fasta file?
 
 ```{r, out.width = "800px", echo=FALSE}
 knitr::include_graphics("mw3.jpg")
@@ -596,7 +622,7 @@ for SAMPLE in ${SAMPLES[@]}
 do
   BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
   BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
-  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/GRCh38.chromsizes $MAINDIR/$SAMPLE/$BW
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
 done
 ```
 
@@ -668,7 +694,9 @@ knitr::include_graphics("mw5.jpg")
 ---
 ## In-class assignment - open question
 
-* A recent study used DNA methylation arrays to compare white blood cells in 2,312 healthy individuals and 1,322 individuals with alzheimer's disease. They identified 5 methylation probes at the vicinity of NFE2 transcription factor with increased methylation in most alzheimer's disease patients. What do you think are the key aspects before we could consider these methylation probes as biomarkers of alzheimer's disease?
+* A recent study used DNA methylation arrays to compare white blood cells in 2,312 healthy individuals and 1,322 individuals with alzheimer's disease. They identified 5 methylation probes at the vicinity of NFE2 transcription factor with increased methylation in most Alzheimer's disease patients.
+
+* What do you think are the key points to investigate before conclusing these methylation probes as biomarkers of alzheimer's disease?
 
 ---
 ## Assignment

@@ -4,7 +4,7 @@
     <title>Epigenomics, with focus on the methylome</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mehran Karimzadeh" />
-    <script src="libs/header-attrs-2.11/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
@@ -192,16 +192,16 @@ done
 ---
 ## Bisulfite sequencing pipeline
 
-<div id="htmlwidget-0c9688854a94e2441b76" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0c9688854a94e2441b76">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e3ed341f61d43998b29b" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e3ed341f61d43998b29b">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 
 ## Question
 
 * Which important steps are missing here?
 
-<div id="htmlwidget-43efb48e19e2a8712d98" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-43efb48e19e2a8712d98">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a8984f48dc1e488bed5b" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a8984f48dc1e488bed5b">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 ## Quality control
 
@@ -722,9 +722,9 @@ plotProfile -m $OUTDIR/mergedMethylationAroundIslands.tsv.gz --perGroup --plotTy
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="libs/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
+"countIncrementalSlides": false,
 "highlightLines": true,
-"countIncrementalSlides": false
+"highlightStyle": "github"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

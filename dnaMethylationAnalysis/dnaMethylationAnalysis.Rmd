@@ -4,12 +4,13 @@ author: "Mehran Karimzadeh"
 date: "June 21st, 2022"
 output:
   xaringan::moon_reader:
+    always_allow_html: yes
     chakra: libs/remark-latest.min.js
     lib_dir: libs
     nature:
+      countIncrementalSlides: no
+      highlightLines: yes
       highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
 ---
 
 <style type="text/css">

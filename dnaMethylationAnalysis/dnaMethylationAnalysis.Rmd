@@ -80,6 +80,15 @@ knitr::opts_chunk$set(echo = TRUE)
 * What type of information can you get from WGBS?
 
 ---
+## What does bisulfite treatment do to DNA?
+
+* Bisulfite treatment converts unmethylated `C` to `U`, resulting the downtream PCR products to reflect the presence of `T` instead of `C` on the forward strand and `A` instead of `G` on the reverse strand.
+
+![](seq_example.png)
+
+
+
+---
 ## Excercise
 
 What do you think is the order of the following statements?

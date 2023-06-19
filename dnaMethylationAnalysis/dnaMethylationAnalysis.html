@@ -18,7 +18,7 @@ class: center, middle, inverse, title-slide
 
 # Epigenomics, with focus on the methylome
 ### Mehran Karimzadeh
-### June 21st, 2022
+### June 20th, 2023
 
 ---
 
@@ -201,16 +201,16 @@ done
 ---
 ## Bisulfite sequencing pipeline
 
-<div id="htmlwidget-aab154a56d4f924c2b85" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-aab154a56d4f924c2b85">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-128ac5fc81bb01a6cbbe" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-128ac5fc81bb01a6cbbe">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 
 ## Question
 
 * Which important steps are missing here?
 
-<div id="htmlwidget-ca5f40f9ef66703cbabf" style="width:504px;height:400px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ca5f40f9ef66703cbabf">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4ca06e6af4f77bc69d48" style="width:504px;height:400px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4ca06e6af4f77bc69d48">{"x":{"diagram":"\ndigraph boxes_and_circles {\n\n  # a \"graph\" statement\n  graph [overlap = true, fontsize = 10]\n\n  # several \"node\" statements\n  node [shape = box,\n        fontname = Helvetica]\n  FASTQT; FASTQN; BAMT; BAMN; bedGraphT; bedGraphN; DMRs\n\n  node [shape = circle,\n        fixedsize = false,\n        width = 1] // sets as circles\n  BWAMETH; MethylDackel; Metilene;\n\n  # several \"edge\" statements\n  FASTQT->BWAMETH BWAMETH->BAMT\n  FASTQN->BWAMETH BWAMETH->BAMN\n  BAMT->MethylDackel BAMN->MethylDackel\n  MethylDackel->bedGraphT MethylDackel->bedGraphN\n  bedGraphT->Metilene bedGraphN->Metilene\n  Metilene->DMRs\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ---
 ## Quality control
 
@@ -407,7 +407,7 @@ scp -r mmg3003student$STUDENTID@teach.scinet.utoronto.ca:/scratch/t/teachmmg3003
 
 
 ```bash
-cd $SCRIPTDIR
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts; cd $SCRIPTDIR
 REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
 FASTQDIR=$SCRATCH/trimmedFastqsChr22
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
@@ -466,6 +466,7 @@ done
 
 
 ```bash
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts
 cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
@@ -491,6 +492,7 @@ done
 
 
 ```bash
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts
 cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 OUTMAIN=$SCRATCH/methylDackelOutputChr22

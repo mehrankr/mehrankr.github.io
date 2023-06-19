@@ -1,7 +1,7 @@
 ---
 title: "Epigenomics, with focus on the methylome"
 author: "Mehran Karimzadeh"
-date: "June 21st, 2022"
+date: "June 20th, 2023"
 output:
   xaringan::moon_reader:
     always_allow_html: yes
@@ -452,7 +452,7 @@ knitr::include_graphics("mw1.jpg")
 * Write a script to generate <filename>_Align.sh scripts for aligning fastq files and submit them to cluster with sbatch
 
 ```{bash eval=FALSE}
-cd $SCRIPTDIR
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts; cd $SCRIPTDIR
 REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
 FASTQDIR=$SCRATCH/trimmedFastqsChr22
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
@@ -514,6 +514,7 @@ knitr::include_graphics("mw2.jpg")
 * Write a script to sort and index each bam file
 
 ```{bash eval=FALSE}
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts
 cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
@@ -540,6 +541,7 @@ knitr::include_graphics("mw2.jpg")
 * Run a script to run MethylDackel files for each BAM file
 
 ```{bash eval=FALSE}
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts
 cd $SCRIPTDIR
 BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
 OUTMAIN=$SCRATCH/methylDackelOutputChr22

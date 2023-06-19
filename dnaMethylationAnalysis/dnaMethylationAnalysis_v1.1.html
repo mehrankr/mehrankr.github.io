@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Epigenomics, with focus on the methylome</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mehran Karimzadeh and Martina Steiner" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Epigenomics, with focus on the methylome
+### Mehran Karimzadeh and Martina Steiner
+### June 20th, 2023
+
+---
+
+
+&lt;style type="text/css"&gt;
+.small {
+  font-size: 65%;
+}
+
+code.r{
+  font-size=8px;
+}
+
+code.python{
+  font-size=3px;
+}
+
+
+code.bash{
+  font-size=8px;
+}
+.medium {
+  font-size: 80%;
+}
+
+.smallcode {
+  font-size:50%
+}
+.smallcode .remark-code {
+  font-size: 50%
+}
+
+&lt;/style&gt;
+
+
+
+This tutorial was created by Dr. Mehran Karimzadeh for MMG3003Y, and adapted by Dr. Martina Steiner.
+
+You will work through a series of quizzes on Quercus, and go through a pipeline of software on the teach cluster. This will prepare you for this week's assignment.
+
+
+Work through the following Quizzes now:
+
+1. EpigeneticsII_WGBS-context
+
+2. EpigeneticsII_methods
+
+3. EpigeneticsII_bisulfite-conversion
+
+4. EpigeneticsII_computational-steps
+
+---
+
+## Background 1: bash
+
+* Log into the teach cluster as described in the RNAseq tutorial
+
+* Avoid computation on the login node 
+#describe why
+
+* Request an interactive session
+
+
+```bash
+salloc
+samtools ...
+```
+
+--
+
+* Write a bash script and submit using _sbatch_
+
+
+```bash
+echo -e '#!/bin/sh' &gt; myBashScriptThatIWillSubmitToRunOnSlurm.sh
+echo "samtools ..." &gt;&gt; myBashScriptThatIWillSubmitToRunOnSlurm.sh
+sbatch -c 1 --mem=4G -t 1:00:00 myBashScriptThatIWillSubmitToRunOnSlurm.sh
+```
+
+
+---
+## For loops in bash
+
+
+```bash
+for i in {0..99}
+do
+  echo "Variable i is set to $i"
+done
+```
+
+--
+
+* Work through the following Quiz on Quercus now
+
+4. EpigeneticsII_bash
+
+5. EpigeneticsII_pipeline
+
+---
+
+## Background 2: Bisulfite sequencing pipeline
+
+* Pipeline outline
+
+--
+
+  + Download the reference genome
+
+--
+
+  + Index the reference genome
+
+--
+
+  + Copy fastq files from a shared folder
+
+--
+
+  + Trimming fastq files with trim galore
+
+--
+
+  + Aligning with bwa-meth (copy the BAM files from a shared folder)
+
+--
+
+  + Extracting CpG methylation estimates
+
+--
+
+  + Visualizing methylation at CpG islands (supplementary)
+
+--
+
+  + Identifying differentially methylated regions
+
+--
+
+  + Investigating genes affected by differential methylation
+  
+---
+
+* Tutorial steps:
+
+  + Tutorial step 1: Data access, trimming and quality control
+
+  + Tutorial step 2: Alignment
+
+  + Tutorial step 3: Extracting estimates
+
+  + Tutorial step 4: Identify differentially methylated regions
+
+
+&lt;img src="mw0.jpg" width="800px" /&gt;
+
+
+---
+## Quality control
+
+* Each step of the process requires a quality control
+
+--
+
+* "FASTQC" to assess quality of FASTQ files before and after removing the adapters
+
+--
+
+* "samtools flagstat" to assess the percent of uniquely aligned reads
+
+--
+
+* Enrichment of differentially methylated regions in promoters, CpG islands, etc.
+
+
+
+---
+## Troubleshooting guide
+
+Throughout this tutorial, you may see that you do not see the same output as the instructor.
+
+Feel free to ask for help.
+
+Some common reasons include:
+
+* You are not logged into the teaching cluster. 
+
+  * You can type `echo $HOSTNAME` to see if it returns `teach01.scinet.local` or not
+
+* Your session got disconnected and the environmental variables that you defined in the earlier steps are not initialized. 
+
+  * You can check if a variable is initialized by typing `echo $VARIABLENAME`. In the case of arrays, to see their elements, you can type `echo ${ARRAYNAME[@]}`.
+
+  * If these are not initialized, nothing will be printed and that means you need to go back to the first occurence of the variable or array and re-run the command.
+
+---
+## Tutorial step 1: Data access — Indexing BWA-meth
+
+* Download FASTA file of chr22
+
+
+```bash
+mkdir -p $SCRATCH/Ref
+cd $SCRATCH/Ref
+wget ftp://ftp.ensembl.org/pub/release-96/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
+zcat Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz | sed 's/&gt;22/&gt;chr22/' &gt; Homo_sapiens.GRCh38.dna.chromosome.22.fa
+```
+
+* Index FASTA file
+
+```bash
+salloc
+module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel
+bwameth.py index Homo_sapiens.GRCh38.dna.chromosome.22.fa
+```
+
+* Expected run time is 3 minutes
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+
+## Tutorial step 1: Data access — Download CpG islands
+
+* Visit http://genome.ucsc.edu
+
+* Select the 3rd tool, _Table Browser_ 
+
+* Select the correct genome assembly, and group _Regulation_
+
+* Select the _CpG Islands_ track
+
+* Under position, type chr22
+
+* Select the output format as _BED - browser extensible data_
+
+* Save the file as: _hg38CpgIslandsForChr22.bed_
+
+* Use scp to transfer the file to $SCRATCH/Datasets
+
+
+```bash
+# From the local computer
+scp ~/Downloads/hg38CpgIslandsForChr22.bed username@teach.scinet.utoronto.ca:/scratch/t/teachmmg3003/mmg3003ta002/Datasets
+```
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 1: Data access — Downloading necessary files
+
+* The following directory contains all of the pipeline for chromosome 22:
+
+
+```bash
+/scratch/m/mhoffman/karimzad
+```
+
+* You can copy the fastq files from that directory to your scratch folder:
+
+
+```bash
+cp -rf /scratch/m/mhoffman/karimzad/newFastqFilesChr22 $SCRATCH
+```
+
+* This folder contains all of the files from the pipeline we process.
+You can copy them the same way if you have issues running the commands.
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+
+---
+## What are these samples
+
+* H1-hESC is a human embryonic stem cell line which has been profiled extensively by the ENCODE consortium
+
+* The left ventricle embryonic tissue is obtained from a human embryo
+
+* By comparing these two tissues, we _may_ identify which regions of chr22 must be (de)methylated for differentiating the embryonic stem cell towards a heart muscle progeny.
+
+
+---
+## Tutorial step 1: Trimming — Trim the FASTQ files
+
+* Write a script to trim paired-end FASTQ files with trim galore in a new folder called trimmedFastqs
+
+
+```bash
+LOGDIR=$SCRATCH/Logs # Creates a new variable 
+SCRIPTDIR=$SCRATCH/Scripts # For scripts that run different programs
+mkdir -p $SCRIPTDIR $LOGDIR # Creating multiple folders simultaneously
+cd $SCRIPTDIR # Change diretory
+FASTQDIR=$SCRATCH/newFastqFilesChr22 # PAth to our untrimmed fastq files
+FQFOLDERS=($(ls $FASTQDIR)) # Arrays
+OUTMAIN=$SCRATCH/trimmedFastqsChr22
+for FQFOLDER in ${FQFOLDERS[@]}
+do
+  FQ1=$FASTQDIR/$FQFOLDER/$FQFOLDER\__1.fastq.gz
+  FQ2=$FASTQDIR/$FQFOLDER/$FQFOLDER\__2.fastq.gz
+  OUTDIR=$OUTMAIN/$FQFOLDER
+  mkdir -p $OUTDIR
+  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  echo "trim_galore --fastqc --paired --gzip -o $OUTDIR $FQ1 $FQ2" &gt;&gt; $SCRATCH/Scripts/$FQFOLDER\_TrimGalore.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/$FQFOLDER\_TrimGalore.%A.ERR -o  $LOGDIR/$FQFOLDER\_TrimGalore.%A.LOG $SCRIPTDIR/$FQFOLDER\_TrimGalore.sh
+done
+```
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 1: Quality control — FASTQC reports
+
+* Use _scp_ to download fastqc files to your local computer
+
+
+```bash
+STUDENTID=05
+scp -r mmg3003student$STUDENTID@teach.scinet.utoronto.ca:/scratch/t/teachmmg3003/mmg3003student$STUDENTID/trimmedFastqsChr22/*/*fastqc* ~/Downloads
+```
+
+
+&lt;img src="mw1.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 2: Alignment — Align with BWA-Meth
+
+* Write a script to generate &lt;filename&gt;_Align.sh scripts for aligning fastq files and submit them to cluster with sbatch
+
+
+```bash
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts; cd $SCRIPTDIR
+REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
+FASTQDIR=$SCRATCH/trimmedFastqsChr22
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
+mkdir -p $BAMDIR
+mkdir -p $SCRIPTDIR
+SAMPLES=($(ls $FASTQDIR))
+for SAMPLE in ${SAMPLES[@]}
+do
+  FQ1=$(ls $FASTQDIR/$SAMPLE | grep val_1.fq.gz)
+  FQ2=$(ls $FASTQDIR/$SAMPLE | grep val_2.fq.gz)
+  echo -e '#!/bin/sh' &gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  echo "bwameth.py --reference $REF $FASTQDIR/$SAMPLE/$FQ1 $FASTQDIR/$SAMPLE/$FQ2 | samtools view -bS -F 4 &gt; $BAMDIR/$SAMPLE.bam" &gt;&gt; $SCRIPTDIR/$SAMPLE\_Align.sh
+  # sbatch -c 1 -t 4:00:00 -e $LOGDIR/$SAMPLE\_Align.%A.ERR -o $LOGDIR/$SAMPLE\_Align.%A.LOG $SCRIPTDIR/$SAMPLE\_Align.sh
+done
+```
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 2: Alignment — Copy the aligned bam files
+
+* It takes 4 hours of CPU time to align the FASTQ files to chr22.
+
+* Assignment: Similar to FASTQ files, copy the folder containing bam files of chr22 to your _$SCRATCH_ NOW!
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+
+## ## Tutorial step 2: Alignment — Sort and index bam files
+
+
+* MethylDackel requires sorted and indexed bam files
+
+* Write a script to sort and index each bam file
+
+
+```bash
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts; cd $SCRIPTDIR
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22
+BAMFILES=($(ls $BAMDIR | grep .bam | grep -v bam.bai | grep -v sorted))
+for BAMFILE in ${BAMFILES[@]}
+do
+  SAMPLENAME=$(echo $BAMFILE | sed 's/.bam//')
+  echo -e '#!/bin/sh' &gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "samtools sort $BAMDIR/$BAMFILE -o $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  echo "samtools index $BAMDIR/$SAMPLENAME\_sorted.bam" &gt;&gt; $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/sortIndex.%A.ERR -o $LOGDIR/sortIndex.%A.LOG $SCRATCH/Scripts/$SAMPLENAME\_sortAndIndex.sh
+done
+```
+
+&lt;img src="mw2.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 3: Extracting estimates — Run MethylDackel
+
+* MethylDackel uses BAM files to extract cytosine methylation counts
+
+
+```bash
+LOGDIR=$SCRATCH/Logs; SCRIPTDIR=$SCRATCH/Scripts; cd $SCRIPTDIR
+BAMDIR=$SCRATCH/trimmedAlignedBamsChr22; OUTMAIN=$SCRATCH/methylDackelOutputChr22
+BAMFILES=($(ls $BAMDIR | grep sorted | grep -v bai | grep bam))
+REF=$SCRATCH/Ref/Homo_sapiens.GRCh38.dna.chromosome.22.fa
+for BAMFILE in ${BAMFILES[@]}
+do
+  SAMPLENAME=$(echo $BAMFILE | sed 's/_sorted.bam//')
+  OUTDIR=$OUTMAIN/$SAMPLENAME
+  mkdir -p $OUTDIR
+  echo -e '#!/bin/sh' &gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "module load anaconda3 gcc java fastqc cutadapt trimgalore bwa samtools bwameth htslib methyldackel" &gt;&gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  echo "MethylDackel extract --fraction --mergeContext $REF $BAMDIR/$BAMFILE -o $OUTDIR/$SAMPLENAME\_" &gt;&gt; $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+  sbatch -c 1 -t 1:00:00 -e $LOGDIR/Meth.%A.ERR -o $LOGDIR/Meth.%A.LOG $SCRIPTDIR/MethylDackel_$SAMPLENAME.sh
+done
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 3: Extracting estimates — Explore the output of MethylDackel
+
+
+* What does each column of MethylDackel output represent?
+
+
+```r
+track type="bedGraph" description="/scratch/t/teachmmg3003/mmg3003ta002/methylDackelOutput/H1-hESC_rep1/H1-hESC_rep1_ CpG methylation levels"
+chr22      10513864        10513865        0
+chr22      10513906        10513907        1
+chr22      10515169        10515170        0
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 3: Extracting estimates —  bedGraph is not efficient
+
+* bedGraph is a user-readable file format
+
+* Storing genomic signal in bedGraph format takes too much space and is computationally inefficient for random data retrieval
+
+* bigWig format, however, can store and retrieve genomic signals efficiently
+
+* Here we will download a program called bedGraphToBigWig and use it to convert bedGraph files
+
+
+
+```bash
+mkdir -p ~/software/bin
+cd ~/software/bin
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
+# Give yourself permission to run this program
+chmod u+x bedGraphToBigWig
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 3: Extracting estimates — Finding size of chromosomes
+
+* bedGraphToBigWig requires a file with information of how long each chromosome is
+
+
+```bash
+cd ~/software/bin
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/fetchChromSizes
+chmod u+x fetchChromSizes
+./fetchChromSizes hg38 &gt; $SCRATCH/Ref/hg38.chromsizes
+```
+
+* How else can we extract chromosome sizes from a fasta file?
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 3: Extracting estimates — Convert bedGraph to bigWig
+
+* Write a script to convert output of MethylDackel from bedGraph to bigWig
+
+
+```bash
+salloc
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+for SAMPLE in ${SAMPLES[@]}
+do
+  BDG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
+  BW=$(echo $BDG | sed 's/bedGraph/bigWig/')
+  ~/software/bin/bedGraphToBigWig $MAINDIR/$SAMPLE/$BDG $SCRATCH/Ref/hg38.chromsizes $MAINDIR/$SAMPLE/$BW
+done
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+
+---
+## Tutorial step 4: Identify DMRs — Identify differentially methylated regions
+
+* There are various software for identifying differentially methylated regions
+
+* Here we will use [https://dx.doi.org/10.1101%2Fgr.196394.115](Metilene: fast and sensitive calling of differentially methylated regions from bisulfite sequencing data)
+
+* Metilene requires a union file of bedGraphs we generated earlier with MethylDackel with the following columns:
+
+
+```r
+Chrom  Start  End  G1_1  G1_2  G2_1  G2_2
+```
+
+---
+* We can generate the input file this way:
+
+
+
+```bash
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+BGS=()
+HEADER=(chr start end)
+for SAMPLE in ${SAMPLES[@]}
+do
+  HEADER+=($SAMPLE)
+  BG=$(ls $MAINDIR/$SAMPLE | grep bedGraph)
+  BGS+=($MAINDIR/$SAMPLE/$BG)
+done
+module load gcc/7.3.0 bedtools
+echo -e ${HEADER[@]} | tr " " "\t" &gt; $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed
+bedtools unionbedg -i ${BGS[@]} &gt;&gt; $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed
+```
+
+&lt;img src="mw4.jpg" width="800px" /&gt;
+
+---
+## Tutorial step 4: Identify DMRs — Metilene
+
+
+```bash
+module load metilene
+OUTDIR=$SCRATCH/metileneOutputChr22
+mkdir -p $OUTDIR
+echo -e "Chrom\tStart\tEnd\tqVal\tmeanDiff\tnumCpgs\tpMWU\tp2DKS\tmeanG1\tmeanG2" &gt; $OUTDIR/MetileneDMR.bed
+metilene -a "H1-hESC" -b "leftVentricle" $SCRATCH/methylDackelOutputChr22/mergedOutputs_unionbedg.bed &gt;&gt; $OUTDIR/MetileneDMR.bed
+```
+
+&lt;img src="mw4.jpg" width="800px" /&gt;
+
+
+---
+## Tutorial step 5: Pathway analysis
+
+How can you go from a list of genomic regions to pathways?
+
+--
+
+  + Find which genes overlap your DMRs
+  
+--
+
+  + Find which biological pathways are regulated by those genes
+  
+--
+
+  + Compute statistical significance for such an overlap
+  
+--
+
+An automated way to do these steps would be GREAT! http://great.stanford.edu/public/html/
+
+&lt;img src="mw5.jpg" width="800px" /&gt;
+
+---
+
+# Supplementary slides
+
+---
+## How can we explore hundreds of genomic regions for specific features, enrichments, etc.?
+
+* DeepTools has a program called _computeMatrix_
+
+* computeMatrix accepts signal files (e.g. in bigWig) and genomic region annotations (e.g. in BED or GTF) to calculate summary statistics
+
+* computeMatrix has two modules:
+
+  + reference-point: Obtains measures for entries of BED file (as reference) as well as their upstream and downstream
+  
+  + scale-regions: Calculates summary measures for BED files by shrinking each entry to a user-defined length
+
+---
+
+&lt;img src="computeMatrix1.png" width="800px" /&gt;
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+
+---
+## How is methylation signal around CpG islands?
+
+* Write a script to execute computeMatrix reference-point on CpG island BED file and the four bigWig files
+
+
+```bash
+MAINDIR=$SCRATCH/methylDackelOutputChr22
+SAMPLES=($(ls $MAINDIR))
+BWS=()
+for SAMPLE in ${SAMPLES[@]}
+do
+  BW=$(ls $MAINDIR/$SAMPLE | grep bigWig)
+  BWS+=($MAINDIR/$SAMPLE/$BW)
+done
+module load anaconda2/5.1.0 deeptools/3.2.1-anaconda2
+OUTDIR=$SCRATCH/methylationMatricesChr22
+mkdir -p $OUTDIR
+computeMatrix reference-point -R $SCRATCH/Datasets/hg38CpgIslandsForChr22.bed -S ${BWS[@]} -o $OUTDIR/mergedMethylationAroundIslands.tsv.gz --referencePoint TES --skipZeros --sortRegions descend --sortUsingSamples 1
+plotProfile -m $OUTDIR/mergedMethylationAroundIslands.tsv.gz -out $OUTDIR/mergedMethylationAroundIslands_1.pdf 
+plotProfile -m $OUTDIR/mergedMethylationAroundIslands.tsv.gz --perGroup --plotType heatmap -out $OUTDIR/mergedMethylationAroundIslands_2.pdf 
+```
+
+&lt;img src="mw3.jpg" width="800px" /&gt;
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"highlightLines": true,
+"highlightStyle": "github"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

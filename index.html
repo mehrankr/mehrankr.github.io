@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mehran's GitHub Page</title>
-    <!-- Bootstrap -->
+    <title>Mehran Karimzadeh</title>
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Quick access</a>
+      <a class="navbar-brand" href="#">Mehran Karimzadeh</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -20,59 +20,65 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#class.presentation">Class presentations</a>
+            <a class="nav-link" href="blog.html">Blog</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Section
+              Sections
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#select.publication">Select publications</a>
-              <a class="dropdown-item" href="#latest.work">Latest work</a>
+              <a class="dropdown-item" href="#select.publication">Publications</a>
               <a class="dropdown-item" href="#class.presentation">Class presentations</a>
-			  <a class="dropdown-item" href="#contact">Contact</a>
+              <a class="dropdown-item" href="#blogs">Blog</a>
+              <a class="dropdown-item" href="#contact">Contact</a>
             </div>
           </li>
         </ul>
       </div>
     </nav>
-    <section>
-      <div class="jumbotron text-center mt-2">
-        <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <h1>Mehran Karimzadeh's GitHub Page</h1>
-              <p>I am currently a Staff Scientist II at Exai Bio and am based in Seattle, WA.
-              I am interested in leveraging deep learning for
-                personalized medicine applications, particularly in the context of
-                early detection, target discovery, and precision therapy.
+
+    <!-- Hero -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9 text-center">
+            <h1>Mehran Karimzadeh</h1>
+            <p class="mt-3">
+              I am currently an AI Scientist at Xaira Therapeutics and am based in Seattle, WA.
+              I am interested in leveraging deep learning for personalized medicine applications,
+              particularly in the context of early detection, target discovery, and precision therapy.
               I have contributed to deep learning models for liquid biopsy and cellular perturbation,
-                including <a href="https://doi.org/10.1038/s41467-024-53851-9">Orion</a>,
-                <a href="https://doi.org/10.1038/s42256-025-01148-x">Exai-1</a> (cover article, <em>Nature Machine Intelligence</em> 2025), and
-                <a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1">X-Cell</a> (pre-print 2026).</p>
-                <p><a class="btn btn-primary btn-lg" href="KARIMZADEH_CV.pdf" target="_blank" role="button">Mehran's CV »</a></p>
-            </div>
+              including <a href="https://doi.org/10.1038/s41467-024-53851-9" target="_blank">Orion</a>,
+              <a href="https://doi.org/10.1038/s42256-025-01148-x" target="_blank">Exai-1</a>
+              (cover article, <em>Nature Machine Intelligence</em> 2025), and
+              <a href="https://www.biorxiv.org/content/10.64898/2026.03.18.712807v1" target="_blank">X-Cell</a>
+              (pre-print 2026).
+            </p>
+            <a class="btn btn-outline-light mt-3" href="KARIMZADEH_CV.pdf" target="_blank" role="button">
+              Curriculum Vitae &rarr;
+            </a>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Publications header -->
     <section class="py-5">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center mb-5">
-            <h1 id="select.publication">Select Publications</h1>
-            <p class="lead text-muted">A curated list of manuscripts where Mehran is the first or co-first author, showcasing key research contributions.</p>
-          </div>
+        <div class="section-header">
+          <h1 id="select.publication">Select Publications</h1>
+          <p class="lead text-muted">A curated list of manuscripts where Mehran is the first or co-first author, showcasing key research contributions.</p>
         </div>
       </div>
     </section>
-    
+
+    <!-- Publication cards -->
     <section class="pb-5">
       <div class="container">
         <div class="row">
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm border-primary">
+            <div class="card h-100 border-primary">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -86,7 +92,7 @@
           </div>
 
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm border-primary">
+            <div class="card h-100 border-primary">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -100,7 +106,7 @@
           </div>
 
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -112,9 +118,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -126,9 +132,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -140,9 +146,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -154,9 +160,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -168,9 +174,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -182,9 +188,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -196,9 +202,9 @@
               </div>
             </div>
           </div>
-    
+
           <div class="col-md-4 col-12 mb-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100">
               <img src="images/pubmed-meta-image.svg" class="card-img-top" alt="Publication representation">
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">
@@ -210,77 +216,111 @@
               </div>
             </div>
           </div>
-    
+
         </div>
       </div>
-    </section>    
-    <hr>    
-    <section>
+    </section>
+
+    <hr>
+
+    <!-- Class presentations -->
+    <section class="py-5">
       <div class="container">
+        <div class="section-header">
+          <h1 id="class.presentation">Class Presentations</h1>
+        </div>
         <div class="row">
-          <div class="col-12">
-            <h1 id="class.presentation" class="text-center mb-4">Class presentations</h1>
-            
+          <div class="col-lg-8 mx-auto">
             <div class="list-group">
-              
+
               <a href="dnaMethylationAnalysis/dnaMethylationAnalysis_v1.1.html" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 DNA methylation workshop</h5>
-                <p class="mb-0 text-muted">Genomic Methodologies, University of Toronto</p>
+                <h5 class="mb-1">DNA methylation workshop</h5>
+                <p class="mb-0 text-muted small">Genomic Methodologies, University of Toronto</p>
               </a>
-              
+
               <a href="isoformworkshop/isoformAnalysis.html" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 Isoform analysis workshop</h5>
-                <p class="mb-0 text-muted">Genomic Methodologies course, University of Toronto</p>
+                <h5 class="mb-1">Isoform analysis workshop</h5>
+                <p class="mb-0 text-muted small">Genomic Methodologies course, University of Toronto</p>
               </a>
-              
+
               <a href="https://jasonlerch.github.io/MBP-stats-2018" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 Introduction to biostatistics</h5>
-                <p class="mb-0 text-muted">Department of Medical Biophysics, University of Toronto (2018)</p>
+                <h5 class="mb-1">Introduction to biostatistics</h5>
+                <p class="mb-0 text-muted small">Department of Medical Biophysics, University of Toronto (2018)</p>
               </a>
-              
+
               <a href="https://jasonlerch.github.io/MBP-stats-2019/" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 Introduction to biostatistics</h5>
-                <p class="mb-0 text-muted">Department of Medical Biophysics, University of Toronto (2019)</p>
+                <h5 class="mb-1">Introduction to biostatistics</h5>
+                <p class="mb-0 text-muted small">Department of Medical Biophysics, University of Toronto (2019)</p>
               </a>
-              
+
               <a href="https://docs.google.com/presentation/d/e/2PACX-1vTvcG4QneCQB8bpCzM0_FFbJaYnhQyDPTEOnD3ps1-K6yicR5KZ0K3g1apU-7PQTBsVC22HmYeKoyo1/pub" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 Introduction to ggplot</h5>
-                <p class="mb-0 text-muted">MBP Tech talks, University of Toronto</p>
+                <h5 class="mb-1">Introduction to ggplot</h5>
+                <p class="mb-0 text-muted small">MBP Tech talks, University of Toronto</p>
               </a>
-              
+
               <a href="https://mbp-tech-talks.github.io/2017-2018/intro-to-R_mehran-karimzadeh_francis-nguyen.pdf" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">📄 Introduction to R</h5>
-                <p class="mb-0 text-muted">MBP Tech Talks, University of Toronto</p>
+                <h5 class="mb-1">Introduction to R</h5>
+                <p class="mb-0 text-muted small">MBP Tech Talks, University of Toronto</p>
               </a>
-              
+
             </div>
           </div>
         </div>
       </div>
     </section>
+
     <hr>
-    <div class="section">
+
+    <!-- Blog section -->
+    <section class="py-5 bg-light" id="blogs">
       <div class="container">
+        <div class="section-header">
+          <h1>Blog</h1>
+          <p class="lead text-muted">Thoughts on AI, bioinformatics, and scientific computing.</p>
+        </div>
         <div class="row">
-          <div class="col-md-4 col-12">
-            <h3 class="text-center" id="contact">Contact information</h3>
-            <p>Email: mehran dot karimzade at gmail dot com</p>
+          <div class="col-lg-8 mx-auto">
+            <div class="list-group">
+
+              <a href="blog.html?post=blogs%2F20260430_interpretable_ai.md" class="list-group-item list-group-item-action blog-listing-item py-3">
+                <div class="d-flex w-100 justify-content-between align-items-start">
+                  <h5 class="mb-1 mr-3">Interpretability of Deep Learning Models: A Historical Review</h5>
+                  <small class="text-muted text-nowrap">Apr 30, 2026</small>
+                </div>
+                <p class="mb-1 text-muted small">From Gradient Saliency to Sparse Autoencoders (2013–2026). A comprehensive review of the most important methods in Explainable AI.</p>
+                <small class="text-muted">By Mehran Karimzadeh</small>
+              </a>
+
+            </div>
+            <p class="text-right mt-3">
+              <a href="blog.html" class="text-muted small">View all posts &rarr;</a>
+            </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
     <hr>
+
+    <!-- Contact -->
+    <section class="py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 col-12">
+            <h3 id="contact">Contact</h3>
+            <p class="text-muted">mehran dot karimzade at gmail dot com</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="text-center">
       <div class="container">
-        <div class="row">
-          <div class="col-12">
-          </div>
-        </div>
+        <small>&copy; Mehran Karimzadeh</small>
       </div>
     </footer>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
     <script src="js/jquery-3.4.1.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap-4.4.1.js"></script>
   </body>

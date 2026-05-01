@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog — Mehran Karimzadeh</title>
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html">Mehran Karimzadeh</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBlog" aria-controls="navbarBlog" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarBlog">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="blog.html">Blog <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container py-5">
+
+      <!-- Blog index (shown when no post selected) -->
+      <div id="blog-index" style="display:none">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h1 class="font-weight-bold mb-1">Blog</h1>
+            <p class="text-muted mb-4">Thoughts on AI, bioinformatics, and scientific computing.</p>
+            <div id="post-list" class="list-group"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Single post view -->
+      <div id="blog-post-view" style="display:none">
+        <div class="row">
+          <div class="col-lg-9 mx-auto">
+            <a href="blog.html" class="btn btn-outline-secondary btn-sm mb-4">&larr; All posts</a>
+            <div id="blog-meta" class="blog-meta-bar"></div>
+            <div id="blog-content" class="blog-content"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div id="blog-error" style="display:none" class="text-center py-5">
+        <h3 class="text-muted">Post not found</h3>
+        <a href="blog.html" class="btn btn-primary mt-3">Back to Blog</a>
+      </div>
+
+    </div>
+
+    <footer class="text-center">
+      <div class="container">
+        <small>&copy; Mehran Karimzadeh</small>
+      </div>
+    </footer>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap-4.4.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+    <script>
+      var BLOG_POSTS = [
+        {
+          file: 'blogs/20260430_interpretable_ai.md',
+          title: 'Interpretability of Deep Learning Models: A Historical Review',
+          description: 'From Gradient Saliency to Sparse Autoencoders (2013–2026). A comprehensive review of the most important methods in Explainable AI.',
+          author: 'Mehran Karimzadeh',
+          date: 'April 30, 2026'
+        }
+      ];
+
+      /* ---- Math protection: replace $$...$$ and $...$ with placeholders
+             before marked processes the markdown, then restore via KaTeX ---- */
+      var mathCache = [];
+
+      function preprocessMath(text) {
+        mathCache = [];
+        // Display math first (may be multiline)
+        text = text.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
+          var idx = mathCache.length;
+          mathCache.push({ display: true, formula: formula });
+          return 'MKRMATH' + idx + 'MKRMATH';
+        });
+        // Inline math (single line only)
+        text = text.replace(/\$([^\n$]+?)\$/g, function(match, formula) {
+          var idx = mathCache.length;
+          mathCache.push({ display: false, formula: formula });
+          return 'MKRMATH' + idx + 'MKRMATH';
+        });
+        return text;
+      }
+
+      function postprocessMath(html) {
+        return html.replace(/MKRMATH(\d+)MKRMATH/g, function(match, idxStr) {
+          var entry = mathCache[parseInt(idxStr)];
+          try {
+            return katex.renderToString(entry.formula, {
+              displayMode: entry.display,
+              throwOnError: false
+            });
+          } catch (e) {
+            return entry.display ? '$$' + entry.formula + '$$' : '$' + entry.formula + '$';
+          }
+        });
+      }
+
+      /* ---- Frontmatter parser ---- */
+      function parseFrontmatter(text) {
+        if (text.startsWith('---')) {
+          var end = text.indexOf('\n---', 3);
+          if (end !== -1) {
+            var yamlText = text.slice(3, end).trim();
+            var content = text.slice(end + 4).trim();
+            var meta = {};
+            yamlText.split('\n').forEach(function(line) {
+              var ci = line.indexOf(':');
+              if (ci !== -1) {
+                meta[line.slice(0, ci).trim()] = line.slice(ci + 1).trim();
+              }
+            });
+            return { meta: meta, content: content };
+          }
+        }
+        return { meta: {}, content: text };
+      }
+
+      /* ---- Validate post path to prevent traversal ---- */
+      function isValidPost(post) {
+        return /^blogs\/[a-zA-Z0-9_.-]+\.md$/.test(post);
+      }
+
+      /* ---- Render a loaded markdown post ---- */
+      function renderPost(text) {
+        var parsed = parseFrontmatter(text);
+        var meta = parsed.meta;
+        var content = parsed.content;
+
+        // Build meta bar
+        var parts = [];
+        if (meta.author) parts.push('By <strong>' + meta.author + '</strong>');
+        if (meta.date) parts.push(meta.date);
+        var metaHtml = parts.join(' &bull; ');
+        if (meta.description) {
+          metaHtml += '<br><span class="text-muted small">' + meta.description + '</span>';
+        }
+        document.getElementById('blog-meta').innerHTML = metaHtml;
+
+        // Protect math before markdown parsing
+        var processedContent = preprocessMath(content);
+
+        // Parse markdown (GFM, tables, no line-break conversion)
+        marked.use({ gfm: true, breaks: false });
+        var html = marked.parse(processedContent);
+
+        // Restore math via KaTeX
+        html = postprocessMath(html);
+
+        var contentEl = document.getElementById('blog-content');
+        contentEl.innerHTML = html;
+
+        // Syntax highlight code blocks
+        contentEl.querySelectorAll('pre code').forEach(function(block) {
+          hljs.highlightElement(block);
+        });
+
+        // Update page title from first H1
+        var h1 = contentEl.querySelector('h1');
+        if (h1) {
+          document.title = h1.textContent + ' — Mehran Karimzadeh';
+        }
+      }
+
+      /* ---- Show blog post listing ---- */
+      function showBlogIndex() {
+        document.getElementById('blog-index').style.display = '';
+        var listEl = document.getElementById('post-list');
+        BLOG_POSTS.forEach(function(post) {
+          var a = document.createElement('a');
+          a.href = 'blog.html?post=' + encodeURIComponent(post.file);
+          a.className = 'list-group-item list-group-item-action blog-listing-item py-3';
+          a.innerHTML =
+            '<div class="d-flex w-100 justify-content-between align-items-start">' +
+              '<h5 class="mb-1 mr-3">' + post.title + '</h5>' +
+              '<small class="text-muted text-nowrap">' + post.date + '</small>' +
+            '</div>' +
+            '<p class="mb-1 text-muted small">' + post.description + '</p>' +
+            '<small class="text-muted">By ' + post.author + '</small>';
+          listEl.appendChild(a);
+        });
+      }
+
+      /* ---- Load and display a single post ---- */
+      function loadPost(postFile) {
+        document.getElementById('blog-post-view').style.display = '';
+        fetch(postFile)
+          .then(function(r) {
+            if (!r.ok) throw new Error('Not found');
+            return r.text();
+          })
+          .then(function(text) {
+            renderPost(text);
+          })
+          .catch(function() {
+            document.getElementById('blog-post-view').style.display = 'none';
+            document.getElementById('blog-error').style.display = '';
+          });
+      }
+
+      /* ---- Route based on ?post= param ---- */
+      var params = new URLSearchParams(window.location.search);
+      var post = params.get('post');
+      if (post && isValidPost(post)) {
+        loadPost(post);
+      } else {
+        showBlogIndex();
+      }
+    </script>
+  </body>
+</html>

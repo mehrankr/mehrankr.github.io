@@ -25,7 +25,7 @@ description: A historical review of explainable AI methods, from gradient salien
    - [Grad-CAM](#grad-cam)
    - [DeepLIFT](#deeplift)
    - [Integrated Gradients](#integrated-gradients)
-   - [SHAP, GradSHAP & DeepSHAP](#shap-gradshap--deepsháp)
+   - [SHAP, GradSHAP & DeepSHAP](#shap-gradshap--deepshap)
 6. **Era 3 — Concept-Based Methods (2016–2020)**
    - [Probing Classifiers](#probing-classifiers)
    - [TCAV](#tcav)

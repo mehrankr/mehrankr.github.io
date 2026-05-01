@@ -144,6 +144,14 @@
         return /^blogs\/[a-zA-Z0-9_.-]+\.md$/.test(post);
       }
 
+      /* ---- Heading slug: mirrors GitHub-flavoured Markdown anchor generation ---- */
+      function slugify(text) {
+        return text
+          .toLowerCase()
+          .replace(/\s/g, '-')          // each whitespace char → hyphen
+          .replace(/[^a-z0-9-]/g, ''); // strip everything else
+      }
+
       /* ---- Render a loaded markdown post ---- */
       function renderPost(text) {
         var parsed = parseFrontmatter(text);
@@ -173,6 +181,13 @@
         var contentEl = document.getElementById('blog-content');
         contentEl.innerHTML = html;
 
+        // Inject id attributes on every heading so TOC anchor links work.
+        // marked v9 does not add ids by default; we compute them the same way
+        // GitHub's renderer does so they match the pre-written TOC hrefs.
+        contentEl.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(function(h) {
+          h.id = slugify(h.textContent);
+        });
+
         // Syntax highlight code blocks
         contentEl.querySelectorAll('pre code').forEach(function(block) {
           hljs.highlightElement(block);
@@ -182,6 +197,18 @@
         var h1 = contentEl.querySelector('h1');
         if (h1) {
           document.title = h1.textContent + ' — Mehran Karimzadeh';
+        }
+
+        // Scroll to the URL hash now that headings have ids.
+        // The browser already attempted this on page load before the async
+        // fetch completed, so we do it manually once rendering is done.
+        if (window.location.hash) {
+          try {
+            var target = document.querySelector(window.location.hash);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          } catch (e) {}
         }
       }
 
